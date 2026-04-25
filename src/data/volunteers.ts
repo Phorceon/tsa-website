@@ -56,7 +56,7 @@ export const volunteerOpportunities: VolunteerOpportunity[] = [
   },
   {
     id: "6",
-    organization: "Tracy Connects / The Young Connects",
+    organization: "Tracy Unity / The Young Connects",
     cause: "Community",
     description: "Event setup, information tables, kid zone supervision, food service, event ambassador, and event take-down. Great for community service hours.",
     commitment: "Event-based",

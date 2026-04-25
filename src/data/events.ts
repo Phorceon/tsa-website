@@ -53,7 +53,7 @@ export const events: Event[] = [
   },
   {
     id: "4",
-    name: "6th Annual Tracy Connects",
+    name: "6th Annual Tracy Unity",
     category: "Family",
     date: "2026-09-19",
     time: "9:00 AM – 3:00 PM",

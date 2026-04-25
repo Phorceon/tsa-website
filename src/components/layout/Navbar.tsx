@@ -41,54 +41,55 @@ export default function Navbar() {
         Skip to main content
       </a>
 
-      <nav className="sticky top-0 z-40 bg-navy text-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-5xl rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+        <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="w-8 h-8 rounded-full bg-sky flex items-center justify-center">
-                <span className="text-navy font-bold text-sm">TC</span>
+            <Link to="/" className="flex items-center gap-3 shrink-0 group">
+              <div className="w-10 h-10 rounded-full bg-sky/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="text-sky font-playfair font-bold text-lg">TC</span>
               </div>
-              <span className="font-semibold text-white hidden sm:inline text-sm lg:text-base">
-                Tracy Community Center
+              <span className="font-playfair font-semibold text-white hidden sm:inline text-lg tracking-wide">
+                Tracy Center
               </span>
             </Link>
 
             {/* Desktop nav */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors relative ${
-                    location.pathname === link.path
-                      ? 'text-white'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                  aria-current={location.pathname === link.path ? 'page' : undefined}
-                >
-                  {link.label}
-                  {location.pathname === link.path && (
-                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-sky rounded-full" />
-                  )}
-                </Link>
-              ))}
+            <div className="hidden lg:flex items-center gap-2">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className="relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 group"
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <span className={`relative z-10 ${isActive ? 'text-navy' : 'text-white group-hover:text-sky'}`}>
+                      {link.label}
+                    </span>
+                    {isActive && (
+                      <span className="absolute inset-0 bg-white rounded-full shadow-sm -z-0" />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right side */}
             <div className="flex items-center gap-3">
               <a
                 href="tel:988"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-sky text-navy text-sm font-semibold px-3 py-1.5 rounded-md hover:bg-sky/90 transition-colors"
+                className="hidden sm:inline-flex items-center gap-2 bg-sky text-navy text-sm font-semibold px-4 py-2 rounded-full hover:bg-white hover:scale-105 transition-all shadow-lg shadow-sky/20"
               >
-                <Phone className="w-3.5 h-3.5" />
-                Get Help Now
+                <Phone className="w-4 h-4" />
+                Get Help
               </a>
 
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 rounded-md hover:bg-white/10 transition-colors"
+                className="lg:hidden p-2 rounded-full hover:bg-white/10 transition-colors text-white"
                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={mobileOpen}
               >

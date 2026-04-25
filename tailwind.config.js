@@ -65,7 +65,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Outfit', 'system-ui', 'sans-serif'],
+        outfit: ['Outfit', 'system-ui', 'sans-serif'],
+        playfair: ['"Playfair Display"', 'serif'],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

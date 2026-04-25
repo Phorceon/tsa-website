@@ -1,7 +1,11 @@
-import { useState } from 'react';
+'use client';
+
+import { useState, Suspense, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { Download, FileText, ChevronDown, ChevronUp } from 'lucide-react';
-import SectionHeader from '@/components/ui/SectionHeader';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { Sparkles } from '@react-three/drei';
+import ReferencesScene from '@/components/3d/ReferencesScene';
 
 interface SourceGroup {
   title: string;
@@ -35,7 +39,7 @@ const sourceGroups: SourceGroup[] = [
     sources: [
       'City of Tracy. (2026). City calendar and events. https://www.cityoftracy.org/I-Want-To/View/City-Calendar',
       'Tracy Earth Project. (2026). Annual Earth Day event. https://tracyearthproject.org',
-      'Tracy Connects. (2026). Community resource fair. https://www.tracyconnects.com',
+      'Tracy Unity. (2026). Community resource fair. https://www.tracyconnects.com',
       'Eventbrite. (2026). Tracy, CA events and calendar. https://www.eventbrite.com/d/ca--tracy/events',
       'Tracy Community Band. (2026). Concert schedule. https://atthegrand.org/events/tracy-community-band',
     ],
@@ -72,111 +76,212 @@ function AccordionItem({ title, children, defaultOpen = true }: { title: string;
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden mb-4">
-      <button
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="border border-border rounded-2xl overflow-hidden mb-5 shadow-lg hover:shadow-xl transition-shadow"
+    >
+      <motion.button
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 bg-white hover:bg-lightgray transition-colors text-left"
+        className="w-full flex items-center justify-between p-6 bg-white hover:bg-lightgray transition-colors text-left"
         aria-expanded={isOpen}
       >
-        <h3 className="font-semibold text-navy">{title}</h3>
-        {isOpen ? <ChevronUp className="w-5 h-5 text-textsecondary" /> : <ChevronDown className="w-5 h-5 text-textsecondary" />}
-      </button>
-      {isOpen && (
-        <div className="p-4 bg-white border-t border-border">
+        <h3 className="font-bold text-lg text-navy">{title}</h3>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {isOpen ? <ChevronUp className="w-6 h-6 text-textsecondary" /> : <ChevronDown className="w-6 h-6 text-textsecondary" />}
+        </motion.div>
+      </motion.button>
+      <motion.div
+        initial={false}
+        animate={{ 
+          height: isOpen ? 'auto' : 0,
+          opacity: isOpen ? 1 : 0
+        }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden"
+      >
+        <div className="p-6 bg-white border-t border-border">
           {children}
         </div>
-      )}
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
 export default function References() {
-  const { ref: headerRef, isRevealed: headerRevealed } = useScrollReveal<HTMLDivElement>(0.05);
+  const heroRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
     <main id="main-content">
-      {/* Page Header */}
-      <section className="bg-navy py-20 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div ref={headerRef} className={`reveal ${headerRevealed ? 'revealed' : ''}`}>
-            <span className="inline-block text-xs font-medium uppercase tracking-widest text-sky mb-3">
+      <motion.section 
+        ref={heroRef}
+        style={{ y, opacity }}
+        className="relative min-h-[80vh] flex items-center overflow-hidden"
+      >
+        <div className="absolute inset-0 z-0">
+          <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: true, alpha: true }}>
+            <Suspense fallback={null}>
+              <ambientLight intensity={0.4} />
+              <directionalLight position={[10, 10, 5]} intensity={1} />
+              <pointLight position={[-10, -10, -5]} intensity={0.3} color="#D97706" />
+              <ReferencesScene />
+              <Sparkles count={50} scale={8} size={2} speed={0.3} color="#D97706" />
+            </Suspense>
+          </Canvas>
+          <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/60 to-navy/90" />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 50, rotateX: -15 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-block px-4 py-2 bg-sky/20 border border-sky/40 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4"
+            >
               References & Attribution
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            </motion.span>
+            
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               Sources & Documentation
             </h1>
-            <p className="text-lg text-white/80 max-w-2xl">
+            
+            <p className="text-xl text-white/80 max-w-2xl">
               All external sources, citations, and required TSA competition documents.
             </p>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Required Documents */}
-      <section className="py-12 bg-lightgray">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="py-16 bg-gradient-to-b from-navy to-lightgray"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg border border-border p-6 text-center card-hover">
-              <FileText className="w-10 h-10 text-navy mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-navy mb-2">Student Copyright Checklist</h3>
-              <p className="text-sm text-textsecondary mb-4">
-                Required TSA document confirming all content permissions and original work.
-              </p>
-              <button
-                onClick={() => alert('PDF download would open the Student Copyright Checklist document.')}
-                className="inline-flex items-center gap-2 bg-navy text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-navy-dark transition-colors"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              { title: 'Student Copyright Checklist', desc: 'Required TSA document confirming all content permissions and original work.' },
+              { title: 'Work Log', desc: 'Complete development timeline and team member contributions.' },
+            ].map((doc, i) => (
+              <motion.div
+                key={doc.title}
+                initial={{ opacity: 0, y: 30, rotateX: -10 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                whileHover={{ y: -10, rotateX: 5 }}
+                className="bg-white rounded-2xl border border-border p-10 text-center shadow-xl hover:shadow-2xl transition-all"
               >
-                <Download className="w-4 h-4" />
-                Download PDF
-              </button>
-            </div>
-            <div className="bg-white rounded-lg border border-border p-6 text-center card-hover">
-              <FileText className="w-10 h-10 text-navy mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-navy mb-2">Work Log</h3>
-              <p className="text-sm text-textsecondary mb-4">
-                Complete development timeline and team member contributions.
-              </p>
-              <button
-                onClick={() => alert('PDF download would open the Work Log document.')}
-                className="inline-flex items-center gap-2 bg-navy text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-navy-dark transition-colors"
-              >
-                <Download className="w-4 h-4" />
-                Download PDF
-              </button>
-            </div>
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className="w-20 h-20 rounded-2xl bg-navy-light flex items-center justify-center mx-auto mb-6"
+                >
+                  <FileText className="w-10 h-10 text-navy" />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-navy mb-3">{doc.title}</h3>
+                <p className="text-textsecondary mb-6">{doc.desc}</p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => alert('PDF download would open the document.')}
+                  className="inline-flex items-center gap-2 bg-navy text-white font-bold px-8 py-4 rounded-xl hover:bg-navy-dark transition-all hover:shadow-xl"
+                >
+                  <Download className="w-5 h-5" />
+                  Download PDF
+                </motion.button>
+              </motion.div>
+            ))}
           </div>
-          <p className="text-xs text-textsecondary text-center mt-6">
+          <p className="text-xs text-textsecondary text-center mt-8">
             <span className="font-semibold">Note:</span> These documents are required per TSA Webmaster competition rules. 
             Failure to include results in disqualification. In a production environment, these would link to actual PDF files.
           </p>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Sources by Category */}
-      <section className="py-16 bg-offwhite">
+      <section className="py-20 bg-gradient-to-b from-offwhite via-white to-offwhite">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader eyebrow="Sources" title="References by Category" align="left" />
-          <div className="mt-10">
-            {sourceGroups.map((group) => (
-              <AccordionItem key={group.title} title={group.title}>
-                <ul className="space-y-3">
-                  {group.sources.map((source, i) => (
-                    <li key={i} className="text-sm text-textsecondary pl-4 border-l-2 border-sky/30">
-                      {source}
-                    </li>
-                  ))}
-                </ul>
-              </AccordionItem>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+              Sources
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-navy">
+              References by Category
+            </h2>
+          </motion.div>
+          
+          <div>
+            {sourceGroups.map((group, i) => (
+              <motion.div
+                key={group.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <AccordionItem title={group.title}>
+                  <ul className="space-y-4">
+                    {group.sources.map((source, j) => (
+                      <motion.li 
+                        key={j} 
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: j * 0.05 }}
+                        className="text-sm text-textsecondary pl-4 border-l-3 border-sky/30"
+                      >
+                        {source}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </AccordionItem>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Framework Statement */}
-      <section className="py-12 bg-navy-light">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="py-16 bg-gradient-to-r from-navy-light via-white to-navy-light"
+      >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-lg font-semibold text-navy mb-4">Custom-Built Framework Statement</h3>
-          <p className="text-navy/80 leading-relaxed">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring' }}
+          >
+            <h3 className="text-2xl font-bold text-navy mb-6">Custom-Built Framework Statement</h3>
+          </motion.div>
+          <p className="text-navy/80 leading-relaxed text-lg">
             This website was built entirely from scratch by the TSA Webmaster team. No pre-built templates, 
             themes, or frameworks (such as WordPress, Bootstrap themes, or purchased templates) were used. 
             All HTML, CSS, and JavaScript were written by team members during the current school year. 
@@ -184,7 +289,7 @@ export default function References() {
             both configured from their bare npm packages without any pre-made theme or template files.
           </p>
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }
