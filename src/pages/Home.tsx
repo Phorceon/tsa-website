@@ -91,14 +91,14 @@ function ParallaxHero() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.18, 0.26], [1, 1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 0.26], ['0%', '-22%']);
 
-  const businessOpacity = useTransform(scrollYProgress, [0.24, 0.3, 0.48, 0.56], [0, 1, 1, 0]);
-  const businessY = useTransform(scrollYProgress, [0.24, 0.3, 0.48, 0.56], ['18%', '0%', '0%', '-18%']);
+  const businessOpacity = useTransform(scrollYProgress, [0.22, 0.28, 0.44, 0.5], [0, 1, 1, 0]);
+  const businessY = useTransform(scrollYProgress, [0.22, 0.28, 0.44, 0.5], ['18%', '0%', '0%', '-18%']);
 
-  const npoOpacity = useTransform(scrollYProgress, [0.52, 0.58, 0.76, 0.84], [0, 1, 1, 0]);
-  const npoY = useTransform(scrollYProgress, [0.52, 0.58, 0.76, 0.84], ['18%', '0%', '0%', '-18%']);
+  const npoOpacity = useTransform(scrollYProgress, [0.5, 0.56, 0.72, 0.78], [0, 1, 1, 0]);
+  const npoY = useTransform(scrollYProgress, [0.5, 0.56, 0.72, 0.78], ['18%', '0%', '0%', '-18%']);
 
-  const servicesOpacity = useTransform(scrollYProgress, [0.8, 0.86, 0.99, 1], [0, 1, 1, 0]);
-  const servicesY = useTransform(scrollYProgress, [0.8, 0.86, 0.99, 1], ['18%', '0%', '0%', '-18%']);
+  const servicesOpacity = useTransform(scrollYProgress, [0.78, 0.84, 0.98, 1], [0, 1, 1, 0]);
+  const servicesY = useTransform(scrollYProgress, [0.78, 0.84, 0.98, 1], ['18%', '0%', '0%', '-18%']);
 
   return (
     <div ref={ref} className="relative h-[430vh] bg-navy-dark">
@@ -106,15 +106,17 @@ function ParallaxHero() {
       {/* Sticky Container holding the Background and 3D Canvas */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         
-        {/* Subtle gradient background */}
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_18%_18%,rgba(74,144,217,0.24),transparent_30%),radial-gradient(circle_at_82%_58%,rgba(85,239,196,0.16),transparent_28%),linear-gradient(135deg,#061323_0%,#091d32_42%,#020713_100%)]" />
+        {/* Dusk city atmosphere behind the scrollytelling Canvas */}
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_18%_16%,rgba(255,214,122,0.18),transparent_24%),radial-gradient(circle_at_74%_28%,rgba(74,144,217,0.28),transparent_32%),radial-gradient(circle_at_84%_68%,rgba(85,239,196,0.18),transparent_28%),linear-gradient(150deg,#06111f_0%,#10273b_38%,#180f28_68%,#020713_100%)]" />
+        <div className="absolute inset-0 z-0 opacity-[0.18] bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,0.18)_42%,transparent_55%),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100%_100%,96px_96px,96px_96px]" />
+        <div className="absolute inset-x-0 top-0 z-0 h-40 bg-gradient-to-b from-[#06111f] to-transparent" />
         
         {/* 3D Scrollytelling Scene */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Canvas
-            shadows="basic"
+            shadows="soft"
             dpr={[1, 1.75]}
-            camera={{ position: [0.85, 2.05, 7.8], fov: 30, near: 0.1, far: 80 }}
+            camera={{ position: [1.8, -0.5, 5.5], fov: 45, near: 0.1, far: 80 }}
             gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
           >
             <Suspense fallback={null}>
@@ -125,22 +127,23 @@ function ParallaxHero() {
 
         {/* Subtle vignette overlay */}
         <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(2,6,23,0.62)_100%)]" />
+        <div className="absolute inset-y-0 left-0 z-[2] w-[58%] bg-gradient-to-r from-[#020713] via-[#020713]/82 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 z-[1] h-48 bg-gradient-to-t from-navy-dark to-transparent" />
 
         {/* HTML Text Overlays (Synchronized to Scroll) */}
         <div className="absolute inset-0 z-10 flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section 1: Main Welcome */}
-          <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute max-w-3xl pointer-events-auto">
+          <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute max-w-md pointer-events-auto">
             <span className="inline-block px-4 py-2 bg-sky/20 border border-sky/40 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-6 backdrop-blur-sm">
               Welcome to Tracy
             </span>
-            <h1 className="font-playfair text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-8 leading-tight tracking-tight drop-shadow-2xl">
+            <h1 className="font-playfair text-3xl sm:text-[2.55rem] md:text-[3.05rem] lg:text-[3.45rem] font-bold text-white mb-6 leading-[0.94] tracking-[-0.035em] drop-shadow-2xl">
               <span className="block">Your Community.</span>
               <span className="block text-sky">Your Resources.</span>
               <span className="block">Your Home.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white/80 mb-10 max-w-xl leading-relaxed">
+            <p className="text-sm md:text-base text-white/80 mb-8 max-w-sm leading-relaxed">
               Connecting Tracy residents with local services, events, mental health support, and opportunities to give back.
             </p>
             <div className="flex flex-wrap gap-5">
@@ -157,7 +160,7 @@ function ParallaxHero() {
           </motion.div>
 
         {/* Section 2: Local Businesses */}
-        <div className="absolute inset-0 flex items-center justify-end">
+        <div className="absolute inset-0 flex items-start justify-end px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8">
           <motion.div style={{ opacity: businessOpacity, y: businessY }} className="max-w-lg pointer-events-auto rounded-[2rem] border border-white/10 bg-slate-950/28 p-7 shadow-2xl shadow-black/20 backdrop-blur-md">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-14 h-14 rounded-2xl bg-[#4A90D9]/20 border border-[#4A90D9]/30 flex items-center justify-center">
@@ -178,8 +181,8 @@ function ParallaxHero() {
         </div>
 
         {/* Section 3: Non-Profits */}
-        <div className="absolute inset-0 flex items-center justify-start">
-          <motion.div style={{ opacity: npoOpacity, y: npoY }} className="max-w-lg pointer-events-auto rounded-[2rem] border border-white/10 bg-slate-950/28 p-7 shadow-2xl shadow-black/20 backdrop-blur-md">
+        <div className="absolute inset-0 flex items-start justify-start px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8">
+          <motion.div style={{ opacity: npoOpacity, y: npoY }} className="max-w-md pointer-events-auto rounded-[2rem] border border-white/10 bg-slate-950/28 p-6 shadow-2xl shadow-black/20 backdrop-blur-md">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-14 h-14 rounded-2xl bg-[#ff7675]/20 border border-[#ff7675]/30 flex items-center justify-center">
                 <Heart className="w-7 h-7 text-[#ff7675]" />
@@ -199,7 +202,7 @@ function ParallaxHero() {
         </div>
 
         {/* Section 4: City Services */}
-        <div className="absolute inset-0 flex items-center justify-end">
+        <div className="absolute inset-0 flex items-start justify-end px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8">
           <motion.div style={{ opacity: servicesOpacity, y: servicesY }} className="max-w-lg pointer-events-auto rounded-[2rem] border border-white/10 bg-slate-950/28 p-7 shadow-2xl shadow-black/20 backdrop-blur-md">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-14 h-14 rounded-2xl bg-[#55efc4]/20 border border-[#55efc4]/30 flex items-center justify-center">

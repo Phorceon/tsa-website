@@ -2,187 +2,147 @@
 
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial } from '@react-three/drei';
+import { Sparkles, Environment, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
-function BreathingSphere() {
-  const sphereRef = useRef<THREE.Mesh>(null);
-  const innerRef = useRef<THREE.Mesh>(null);
-  
+// Calm animated water plane
+function WaterSurface() {
+  const meshRef = useRef<THREE.Mesh>(null);
   useFrame((state) => {
-    if (sphereRef.current) {
-      const breathe = Math.sin(state.clock.elapsedTime * 0.5) * 0.15 + 1;
-      sphereRef.current.scale.set(breathe, breathe, breathe);
-      sphereRef.current.rotation.y = state.clock.elapsedTime * 0.1;
-    }
-    if (innerRef.current) {
-      const breathe = Math.sin(state.clock.elapsedTime * 0.5 + Math.PI) * 0.1 + 1;
-      innerRef.current.scale.set(breathe, breathe, breathe);
+    if (meshRef.current) {
+      // animate UV offset to give flowing feel
+      (meshRef.current.material as THREE.MeshStandardMaterial).envMapIntensity =
+        0.5 + Math.sin(state.clock.elapsedTime * 0.4) * 0.2;
     }
   });
 
   return (
-    <group position={[0, 0, 0]}>
-      <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
-        <mesh ref={sphereRef}>
-          <sphereGeometry args={[1.5, 64, 64]} />
-          <MeshDistortMaterial
-            color="#4A90D9"
-            speed={1.5}
-            distort={0.3}
-            metalness={0.6}
-            roughness={0.2}
-            transparent
-            opacity={0.7}
-          />
-        </mesh>
-      </Float>
-      <Float speed={2} rotationIntensity={0.3} floatIntensity={0.5}>
-        <mesh ref={innerRef}>
-          <sphereGeometry args={[0.8, 32, 32]} />
-          <meshStandardMaterial 
-            color="#1E4D8C"
-            emissive="#1E4D8C"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-      </Float>
-    </group>
-  );
-}
-
-function CalmParticles() {
-  const particlesRef = useRef<THREE.Points>(null);
-  
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    const positions = new Float32Array(300 * 3);
-    const colors = new Float32Array(300 * 3);
-    for (let i = 0; i < 300; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      const r = 2 + Math.random() * 2;
-      
-      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = r * Math.cos(phi);
-      
-      colors[i * 3] = 0.3 + Math.random() * 0.2;
-      colors[i * 3 + 1] = 0.5 + Math.random() * 0.3;
-      colors[i * 3 + 2] = 0.85;
-    }
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    return geo;
-  }, []);
-
-  useFrame((state) => {
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y = state.clock.elapsedTime * 0.05;
-      particlesRef.current.rotation.x = state.clock.elapsedTime * 0.02;
-    }
-  });
-
-  return (
-    <points ref={particlesRef} geometry={geometry}>
-      <pointsMaterial size={0.05} vertexColors transparent opacity={0.8} />
-    </points>
-  );
-}
-
-function Helix() {
-  const helixRef = useRef<THREE.Group>(null);
-  
-  useFrame((state) => {
-    if (helixRef.current) {
-      helixRef.current.rotation.y = state.clock.elapsedTime * 0.3;
-    }
-  });
-
-  const points = useMemo(() => {
-    const pts = [];
-    for (let i = 0; i < 100; i++) {
-      const t = i / 100;
-      const angle = t * Math.PI * 8;
-      const radius = 0.3 + t * 0.5;
-      pts.push(new THREE.Vector3(
-        Math.cos(angle) * radius,
-        (t - 0.5) * 4,
-        Math.sin(angle) * radius
-      ));
-    }
-    return pts;
-  }, []);
-
-  return (
-    <group ref={helixRef} position={[3, 0, 0]}>
-      {points.map((point, i) => (
-        <mesh key={i} position={[point.x, point.y, point.z]}>
-          <sphereGeometry args={[0.05, 8, 8]} />
-          <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.5} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-function HeartbeatLine() {
-  const geometry = useMemo(() => {
-    const points = [];
-    for (let i = 0; i < 100; i++) {
-      const x = (i / 100 - 0.5) * 8;
-      let y = 0;
-      if (i > 20 && i < 25) y = 0.5;
-      else if (i >= 25 && i < 30) y = -0.3;
-      else if (i >= 30 && i < 35) y = 0.8;
-      else if (i >= 35 && i < 40) y = -0.2;
-      points.push(new THREE.Vector3(x, y, 0));
-    }
-    return points;
-  }, []);
-
-  return (
-    <group position={[-3, 0, 0]}>
-      {geometry.map((point, i) => (
-        <mesh key={i} position={point}>
-          <sphereGeometry args={[0.03, 8, 8]} />
-          <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={1} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-function CrisisRing() {
-  const ringRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (ringRef.current) {
-      ringRef.current.rotation.x = state.clock.elapsedTime * 0.5;
-      ringRef.current.rotation.z = state.clock.elapsedTime * 0.3;
-      const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.1 + 1;
-      ringRef.current.scale.set(pulse, pulse, pulse);
-    }
-  });
-
-  return (
-    <mesh ref={ringRef} position={[0, 2, -1]}>
-      <torusGeometry args={[1, 0.05, 16, 100]} />
-      <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.8} />
+    <mesh ref={meshRef} rotation={[-Math.PI / 2.2, 0, 0]} position={[0, -1.5, -2]}>
+      <planeGeometry args={[20, 18, 80, 80]} />
+      <MeshDistortMaterial
+        color="#0a2a4a"
+        emissive="#0a2a4a"
+        emissiveIntensity={0.3}
+        speed={0.8}
+        distort={0.18}
+        metalness={0.95}
+        roughness={0.05}
+        transparent
+        opacity={0.85}
+      />
     </mesh>
   );
 }
 
-export default function MentalHealthScene() {
+// Rising light particle — bioluminescent
+function LightParticle({ x, z, delay }: { x: number; z: number; delay: number }) {
+  const ref = useRef<THREE.Mesh>(null);
+  const colors = ['#56d8e4', '#7ee8fa', '#80ff72', '#a8edea'];
+  const color = useMemo(() => colors[Math.floor(Math.random() * colors.length)], []);
+  const speed = useMemo(() => 0.3 + Math.random() * 0.4, []);
+  const startY = useMemo(() => -1.5 + Math.random() * 0.5, []);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    const t = (state.clock.elapsedTime * speed + delay) % 5;
+    ref.current.position.y = startY + t;
+    const wane = 1 - Math.max(0, (t - 3) / 2);
+    ref.current.material instanceof THREE.MeshStandardMaterial &&
+      (ref.current.material.emissiveIntensity = 2.5 * wane);
+    ref.current.scale.set(wane, wane, wane);
+  });
+
+  return (
+    <mesh ref={ref} position={[x, startY, z]}>
+      <sphereGeometry args={[0.035, 8, 8]} />
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.5} />
+    </mesh>
+  );
+}
+
+// The calm breathing central orb
+function BreathingOrb() {
+  const ref = useRef<THREE.Mesh>(null);
+  useFrame((state) => {
+    if (!ref.current) return;
+    const breathe = Math.sin(state.clock.elapsedTime * 0.5) * 0.12 + 1;
+    ref.current.scale.set(breathe, breathe, breathe);
+    (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity =
+      0.6 + Math.sin(state.clock.elapsedTime * 0.5) * 0.25;
+  });
+
   return (
     <group>
-      <BreathingSphere />
-      <CalmParticles />
-      <Helix />
-      <HeartbeatLine />
-      <CrisisRing />
-      <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
+      {/* Outer glow shell — large transparent */}
+      <mesh>
+        <sphereGeometry args={[1.6, 32, 32]} />
+        <meshStandardMaterial
+          color="#56d8e4"
+          emissive="#56d8e4"
+          emissiveIntensity={0.15}
+          transparent
+          opacity={0.07}
+          roughness={0}
+          metalness={0.8}
+        />
+      </mesh>
+      {/* Mid shell */}
+      <mesh>
+        <sphereGeometry args={[1.1, 32, 32]} />
+        <meshStandardMaterial
+          color="#80ff72"
+          emissive="#80ff72"
+          emissiveIntensity={0.2}
+          transparent
+          opacity={0.1}
+        />
+      </mesh>
+      {/* Core */}
+      <mesh ref={ref}>
+        <sphereGeometry args={[0.62, 48, 48]} />
+        <MeshDistortMaterial
+          color="#56d8e4"
+          emissive="#56d8e4"
+          emissiveIntensity={0.8}
+          speed={1.2}
+          distort={0.22}
+          metalness={0.6}
+          roughness={0.1}
+          transparent
+          opacity={0.88}
+        />
+      </mesh>
+      <pointLight color="#56d8e4" intensity={4} distance={7} decay={2} />
+    </group>
+  );
+}
+
+export default function MentalHealthScene() {
+  const particles = useMemo(() =>
+    Array.from({ length: 60 }, (_, i) => ({
+      x: (Math.random() - 0.5) * 12,
+      z: (Math.random() - 0.5) * 8,
+      delay: i * 0.2,
+    })), []);
+
+  return (
+    <group>
+      <color attach="background" args={['#020b14']} />
+      <fog attach="fog" args={['#020b14', 10, 24]} />
+
+      <ambientLight intensity={0.12} color="#071525" />
+      <directionalLight position={[0, 8, 4]} intensity={0.5} color="#56d8e4" />
+      <pointLight position={[-4, 3, 2]} color="#80ff72" intensity={3} distance={10} />
+      <pointLight position={[4, 2, -2]} color="#56d8e4" intensity={3} distance={10} />
+      <Environment preset="night" />
+
+      <WaterSurface />
+      <BreathingOrb />
+
+      {particles.map((p, i) => <LightParticle key={i} {...p} />)}
+
+      <Sparkles count={120} scale={[16, 8, 10]} size={1.5} speed={0.15} color="#56d8e4" opacity={0.5} />
+      <Sparkles count={60} scale={[12, 6, 8]} size={0.9} speed={0.2} color="#80ff72" opacity={0.4} />
     </group>
   );
 }

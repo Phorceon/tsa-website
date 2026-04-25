@@ -1,27 +1,16 @@
 'use client';
 
-import { useState, useMemo, Suspense, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { Info, ExternalLink } from 'lucide-react';
-import { Sparkles } from '@react-three/drei';
+import { useState, useMemo } from 'react';
+import { motion } from 'motion/react';
+import { Info, ExternalLink, Dumbbell, Palette, FlaskConical, Footprints } from 'lucide-react';
 import ProgramCard from '@/components/cards/ProgramCard';
 import { programs, programAgeGroups, programCategories, programCosts } from '@/data/programs';
-import ProgramsScene from '@/components/3d/ProgramsScene';
+import CinematicScrollyHero from '@/components/CinematicScrollyHero';
 
 export default function Programs() {
-  const heroRef = useRef<HTMLDivElement>(null);
   const [ageFilter, setAgeFilter] = useState('All');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [costFilter, setCostFilter] = useState('All');
-  
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const filteredPrograms = useMemo(() => {
     return programs.filter((p) => {
@@ -34,117 +23,93 @@ export default function Programs() {
     });
   }, [ageFilter, categoryFilter, costFilter]);
 
-  const clearFilters = () => {
-    setAgeFilter('All');
-    setCategoryFilter('All');
-    setCostFilter('All');
-  };
-
+  const clearFilters = () => { setAgeFilter('All'); setCategoryFilter('All'); setCostFilter('All'); };
   const hasFilters = ageFilter !== 'All' || categoryFilter !== 'All' || costFilter !== 'All';
-
   const filterGroups = [
     { label: 'Age Group', options: programAgeGroups, value: ageFilter, setter: setAgeFilter },
     { label: 'Category', options: programCategories, value: categoryFilter, setter: setCategoryFilter },
     { label: 'Cost', options: programCosts, value: costFilter, setter: setCostFilter },
   ];
 
+  const programTypes = [
+    { icon: Dumbbell, label: 'Sports', desc: 'Basketball, soccer, swim & more', color: '#D97706' },
+    { icon: Palette, label: 'Arts', desc: 'Painting, ceramics, music & dance', color: '#9333EA' },
+    { icon: FlaskConical, label: 'STEM', desc: 'Coding, robotics & science', color: '#4A90D9' },
+    { icon: Footprints, label: 'Fitness', desc: 'Yoga, zumba & senior fitness', color: '#16A34A' },
+  ];
+
   return (
     <main id="main-content">
-      <motion.section 
-        ref={heroRef}
-        style={{ y, opacity }}
-        className="relative min-h-[80vh] flex items-center overflow-hidden"
-      >
-        <div className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-            <Suspense fallback={null}>
-              <ambientLight intensity={0.4} />
-              <directionalLight position={[10, 10, 5]} intensity={1} />
-              <pointLight position={[-10, -10, -5]} intensity={0.3} color="#16A34A" />
-              <ProgramsScene />
-              <Sparkles count={50} scale={8} size={2} speed={0.3} color="#9333EA" />
-            </Suspense>
-          </Canvas>
-          <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/60 to-navy/90" />
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 50, rotateX: -15 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-2 bg-sky/20 border border-sky/40 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4"
-            >
-              Community Programs
-            </motion.span>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Programs for Every Age
-            </h1>
-            
-            <p className="text-xl text-white/80 max-w-2xl">
-              Sports, arts, STEM, fitness, and social programs running year-round at the Tracy Community Center.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="space-y-6 mt-10"
-          >
-            {filterGroups.map((group, groupIndex) => (
-              <motion.div 
-                key={group.label}
-                className="flex flex-wrap items-center gap-4"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + groupIndex * 0.1 }}
-              >
-                <span className="text-sm font-semibold text-white/60 uppercase tracking-wider min-w-[100px]">{group.label}</span>
-                <div className="flex flex-wrap gap-2">
-                  {group.options.map((opt, i) => (
-                    <motion.button
-                      key={opt}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + groupIndex * 0.1 + i * 0.03 }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => group.setter(opt)}
-                      className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                        group.value === opt
-                          ? 'bg-white text-navy shadow-lg shadow-white/20'
-                          : 'bg-white/15 text-white/80 hover:bg-white/25 border border-white/20'
-                      }`}
-                    >
-                      {opt}
-                    </motion.button>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-            
-            {hasFilters && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={clearFilters}
-                className="text-white/70 hover:text-white transition-colors"
-              >
-                Clear Filters
-              </motion.button>
-            )}
-          </motion.div>
-        </div>
-      </motion.section>
+      <CinematicScrollyHero
+        tone="programs"
+        accent="#a855f7"
+        secondary="#22c55e"
+        background="linear-gradient(135deg, #070214 0%, #16072b 46%, #021507 100%)"
+        icon={Dumbbell}
+        images={[
+          {
+            url: 'https://www.cityoftracy.org/files/assets/city/v/1/parks-and-rec/images/images-26-b-summer-2026/recreation-programs/summer-adventure-camp.jpg',
+            label: 'Summer Camp',
+          },
+          {
+            url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=80',
+            label: 'Group Activities',
+          },
+          {
+            url: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1800&q=80',
+            label: 'Youth Sports',
+          },
+        ]}
+        chapters={[
+          {
+            eyebrow: 'Community Programs',
+            title: 'Programs for',
+            accent: 'Every Age',
+            description: 'Sports, arts, STEM, and fitness run like colorful lanes across the Tracy Community Center calendar.',
+          },
+          {
+            eyebrow: 'Activity Lanes',
+            title: 'Choose Your',
+            accent: 'Track',
+            align: 'right',
+            content: (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {programTypes.map(({ icon: Icon, label, desc, color }) => (
+                  <div key={label} className="rounded-[1.25rem] border border-white/10 bg-white/10 p-4 shadow-xl">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl" style={{ background: `${color}20`, border: `1px solid ${color}40` }}>
+                      <Icon className="h-6 w-6" style={{ color }} />
+                    </div>
+                    <h3 className="text-lg font-bold text-white">{label}</h3>
+                    <p className="text-sm text-white/60">{desc}</p>
+                  </div>
+                ))}
+              </div>
+            ),
+          },
+          {
+            eyebrow: 'Filter Programs',
+            title: 'Find Your',
+            accent: 'Program',
+            description: 'Filter the catalog by age, activity, and cost before jumping into the full program list.',
+            content: (
+              <div className="pointer-events-auto space-y-4">
+                {filterGroups.map((group) => (
+                  <div key={group.label} className="flex flex-wrap items-center gap-3">
+                    <span className="min-w-[90px] text-sm font-semibold uppercase tracking-wider text-white/60">{group.label}</span>
+                    {group.options.map((opt) => (
+                      <button key={opt} onClick={() => group.setter(opt)}
+                        className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
+                          group.value === opt ? 'bg-white text-navy shadow-lg' : 'border border-white/20 bg-white/15 text-white/80 hover:bg-white/25'
+                        }`}>{opt}</button>
+                    ))}
+                  </div>
+                ))}
+                {hasFilters && <button onClick={clearFilters} className="text-sm text-white/70 transition-colors hover:text-white">Clear Filters</button>}
+              </div>
+            ),
+          },
+        ]}
+      />
 
       <section className="py-16 pb-24 bg-gradient-to-b from-navy to-offwhite">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

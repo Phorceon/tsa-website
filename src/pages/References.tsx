@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, Suspense, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { Download, FileText, ChevronDown, ChevronUp } from 'lucide-react';
-import { Sparkles } from '@react-three/drei';
-import ReferencesScene from '@/components/3d/ReferencesScene';
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { Download, FileText, ChevronDown, ChevronUp, BookOpen, Library, Quote } from 'lucide-react';
+import CinematicScrollyHero from '@/components/CinematicScrollyHero';
 
 interface SourceGroup {
   title: string;
@@ -115,61 +113,74 @@ function AccordionItem({ title, children, defaultOpen = true }: { title: string;
 }
 
 export default function References() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   return (
     <main id="main-content">
-      <motion.section 
-        ref={heroRef}
-        style={{ y, opacity }}
-        className="relative min-h-[80vh] flex items-center overflow-hidden"
-      >
-        <div className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-            <Suspense fallback={null}>
-              <ambientLight intensity={0.4} />
-              <directionalLight position={[10, 10, 5]} intensity={1} />
-              <pointLight position={[-10, -10, -5]} intensity={0.3} color="#D97706" />
-              <ReferencesScene />
-              <Sparkles count={50} scale={8} size={2} speed={0.3} color="#D97706" />
-            </Suspense>
-          </Canvas>
-          <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/60 to-navy/90" />
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 50, rotateX: -15 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-2 bg-sky/20 border border-sky/40 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4"
-            >
-              References & Attribution
-            </motion.span>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Sources & Documentation
-            </h1>
-            
-            <p className="text-xl text-white/80 max-w-2xl">
-              All external sources, citations, and required TSA competition documents.
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
+      <CinematicScrollyHero
+        tone="references"
+        accent="#fbbf24"
+        secondary="#818cf8"
+        background="linear-gradient(135deg, #04060d 0%, #0d1020 56%, #07040d 100%)"
+        icon={BookOpen}
+        images={[
+          {
+            url: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1800&q=80',
+            label: 'Archive',
+          },
+          {
+            url: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1800&q=80',
+            label: 'Research',
+          },
+          {
+            url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=80',
+            label: 'Documentation',
+          },
+        ]}
+        chapters={[
+          {
+            eyebrow: 'References & Attribution',
+            title: 'Sources &',
+            accent: 'Citations',
+            description: 'External sources, TSA competition documents, and required attributions are organized like a living archive.',
+          },
+          {
+            eyebrow: 'Referenced Works',
+            title: 'Source',
+            accent: 'Index',
+            align: 'right',
+            content: (
+              <div className="space-y-2">
+                {sourceGroups.slice(0, 5).map((group, i) => (
+                  <div key={group.title} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/10 px-4 py-3">
+                    <span className="w-5 font-mono text-sm font-bold text-amber-300">{i + 1}</span>
+                    <p className="text-sm font-medium text-white/80">{group.title}</p>
+                    <span className="ml-auto text-xs text-white/40">{group.sources.length} sources</span>
+                  </div>
+                ))}
+              </div>
+            ),
+          },
+          {
+            eyebrow: 'TSA Documents',
+            title: 'Official',
+            accent: 'Documents',
+            description: 'Competition paperwork is highlighted before the full references and document cards below.',
+            content: (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {['Copyright Checklist', 'Work Log'].map((doc, i) => (
+                  <div key={doc} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-5 py-4">
+                    {i === 0 ? <FileText className="h-5 w-5 text-amber-300" /> : <Library className="h-5 w-5 text-indigo-300" />}
+                    <span className="text-sm font-medium text-white/80">{doc}</span>
+                  </div>
+                ))}
+                <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-5 py-4 sm:col-span-2">
+                  <Quote className="h-5 w-5 text-white/60" />
+                  <span className="text-sm font-medium text-white/70">Citation groups continue below</span>
+                </div>
+              </div>
+            ),
+          },
+        ]}
+      />
 
       <motion.section 
         initial={{ opacity: 0 }}

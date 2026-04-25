@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, useMemo, Suspense, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { Phone, MessageSquare, AlertTriangle, Play, Pause, RotateCcw, ChevronRight, Clock, BookOpen, Heart, Users } from 'lucide-react';
-import { Sparkles } from '@react-three/drei';
+import { useState, useMemo } from 'react';
+import { motion } from 'motion/react';
+import { Phone, MessageSquare, AlertTriangle, Play, Pause, RotateCcw, ChevronRight, Clock, BookOpen, Heart, Users, Wind } from 'lucide-react';
 import TherapistCard from '@/components/cards/TherapistCard';
 import { therapists, therapistSpecialties, therapistInsurance, therapistLanguages, therapistFormats } from '@/data/therapists';
-import MentalHealthScene from '@/components/3d/MentalHealthScene';
+import CinematicScrollyHero from '@/components/CinematicScrollyHero';
 
 const crisisLines = [
   {
@@ -101,7 +99,7 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
         <div className="flex items-center gap-4 text-sm text-textsecondary">
           {phases.map((p, i) => (
             <motion.span
-              key={p}
+              key={`${p}-${i}`}
               animate={{ 
                 color: isRunning && i === phase % phases.length ? '#1E4D8C' : '#6B7280',
                 scale: isRunning && i === phase % phases.length ? 1.1 : 1
@@ -145,19 +143,10 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
 }
 
 export default function MentalHealth() {
-  const heroRef = useRef<HTMLDivElement>(null);
   const [specialtyFilter, setSpecialtyFilter] = useState('All');
   const [insuranceFilter, setInsuranceFilter] = useState('All');
   const [languageFilter, setLanguageFilter] = useState('All');
   const [formatFilter, setFormatFilter] = useState('All');
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const filteredTherapists = useMemo(() => {
     return therapists.filter((t) => {
@@ -175,49 +164,68 @@ export default function MentalHealth() {
 
   return (
     <main id="main-content">
-      <motion.section 
-        ref={heroRef}
-        style={{ y, opacity }}
-        className="relative min-h-[80vh] flex items-center overflow-hidden"
-      >
-        <div className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-            <Suspense fallback={null}>
-              <ambientLight intensity={0.3} />
-              <directionalLight position={[10, 10, 5]} intensity={1} />
-              <pointLight position={[-10, -10, -5]} intensity={0.5} color="#DC2626" />
-              <MentalHealthScene />
-              <Sparkles count={100} scale={10} size={2} speed={0.3} color="#4A90D9" />
-            </Suspense>
-          </Canvas>
-          <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/60 to-navy/90" />
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 50, rotateX: -15 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-2 bg-sky/20 border border-sky/40 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4"
-            >
-              Mental Health
-            </motion.span>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              You Are Not Alone
-            </h1>
-            
-            <p className="text-xl text-white/80 max-w-2xl">
-              Tracy residents have access to crisis support, professional care, and self-guided wellness tools.
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
+      <CinematicScrollyHero
+        tone="mental"
+        accent="#2dd4bf"
+        secondary="#38bdf8"
+        background="linear-gradient(135deg, #010d12 0%, #022125 56%, #010812 100%)"
+        icon={Heart}
+        images={[
+          {
+            url: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=1800&q=80',
+            label: 'Brain Health',
+          },
+          {
+            url: 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1800&q=80',
+            label: 'Counseling',
+          },
+          {
+            url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1800&q=80',
+            label: 'Wellness',
+          },
+        ]}
+        chapters={[
+          {
+            eyebrow: 'Mental Health Support',
+            title: 'You Are',
+            accent: 'Not Alone',
+            description: 'Crisis support, licensed therapists, and guided wellness tools are staged as a clear pathway from urgent help to ongoing care.',
+          },
+          {
+            eyebrow: '24/7 Crisis Signal',
+            title: 'Help Is',
+            accent: 'Immediate',
+            align: 'right',
+            content: (
+              <div className="space-y-3">
+                {crisisLines.map(line => (
+                  <div key={line.name} className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                    <p className="font-bold text-white">{line.name}</p>
+                    <p className="font-mono text-xl font-bold text-teal-300">{line.contact}{line.number ? ` to ${line.number}` : ''}</p>
+                    <p className="mt-1 text-sm text-white/60">{line.description}</p>
+                  </div>
+                ))}
+              </div>
+            ),
+          },
+          {
+            eyebrow: 'Find a Therapist',
+            title: 'Professional',
+            accent: 'Care',
+            description: 'Use the specialty, insurance, language, and format filters below to narrow the therapist directory.',
+            content: (
+              <div className="flex flex-wrap gap-3">
+                {['Anxiety', 'Depression', 'Trauma', 'Couples', 'Youth'].map(tag => (
+                  <span key={tag} className="rounded-full border border-sky/30 bg-sky/20 px-4 py-2 text-sm font-medium text-sky">{tag}</span>
+                ))}
+                <span className="inline-flex items-center gap-2 rounded-full border border-teal-300/30 bg-teal-300/15 px-4 py-2 text-sm font-medium text-teal-200">
+                  <Wind className="h-4 w-4" /> Wellness tools
+                </span>
+              </div>
+            ),
+          },
+        ]}
+      />
 
       <motion.section 
         initial={{ opacity: 0 }}

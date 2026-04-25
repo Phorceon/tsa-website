@@ -2,109 +2,152 @@
 
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
+import { Sparkles, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-interface ResourceBuildingProps {
-  position: [number, number, number];
-  type: 'house' | 'hospital' | 'school' | 'food' | 'legal';
-}
-
-function ResourceBuilding({ position, type }: ResourceBuildingProps) {
+// A single data node
+function DataNode({ position, color, size = 0.18 }: {
+  position: [number, number, number]; color: string; size?: number;
+}) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const colors: Record<string, string> = {
-    house: '#1E4D8C',
-    hospital: '#DC2626',
-    school: '#4A90D9',
-    food: '#16A34A',
-    legal: '#D97706',
-  };
+  const glowRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.2;
+      const pulse = Math.sin(state.clock.elapsedTime * 1.5 + position[0]) * 0.08 + 1;
+      meshRef.current.scale.set(pulse, pulse, pulse);
+    }
+    if (glowRef.current) {
+      const gpulse = Math.sin(state.clock.elapsedTime * 0.8 + position[1]) * 0.2 + 1;
+      glowRef.current.scale.set(gpulse, gpulse, gpulse);
     }
   });
 
-  const geometry = type === 'house' 
-    ? <boxGeometry args={[0.8, 1.2, 0.8]} />
-    : type === 'hospital'
-    ? <cylinderGeometry args={[0.5, 0.6, 1.2, 8]} />
-    : type === 'school'
-    ? <boxGeometry args={[1, 0.8, 0.8]} />
-    : type === 'food'
-    ? <coneGeometry args={[0.6, 1.2, 6]} />
-    : <boxGeometry args={[0.9, 1.4, 0.6]} />;
-
   return (
-    <Float speed={2} rotationIntensity={0.3} floatIntensity={0.5}>
-      <mesh ref={meshRef} position={position} scale={0.8}>
-        {geometry}
-        <meshStandardMaterial 
-          color={colors[type]} 
-          metalness={0.4} 
-          roughness={0.3}
-        />
+    <group position={position}>
+      {/* Outer glow sphere */}
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[size * 2.2, 16, 16]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} transparent opacity={0.12} />
       </mesh>
-    </Float>
-  );
-}
-
-function ConnectingLines() {
-  const linesRef = useRef<THREE.Group>(null);
-  
-  const lineData = useMemo(() => {
-    const lines = [];
-    for (let i = 0; i < 8; i++) {
-      const startX = (Math.random() - 0.5) * 10;
-      const startY = (Math.random() - 0.5) * 6;
-      const endX = (Math.random() - 0.5) * 10;
-      const endY = (Math.random() - 0.5) * 6;
-      lines.push({
-        start: new THREE.Vector3(startX, startY, 0),
-        end: new THREE.Vector3(endX, endY, 0),
-      });
-    }
-    return lines;
-  }, []);
-
-  return (
-    <group ref={linesRef}>
-      {lineData.map((line, i) => (
-        <primitive key={i} object={new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints([line.start, line.end]),
-          new THREE.LineBasicMaterial({ color: '#4A90D9', transparent: true, opacity: 0.3 })
-        )} />
-      ))}
+      {/* Core node */}
+      <mesh ref={meshRef}>
+        <octahedronGeometry args={[size, 0]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.2} roughness={0.05} metalness={0.8} />
+      </mesh>
+      <pointLight color={color} intensity={1.8} distance={2.5} decay={2} />
     </group>
   );
 }
 
-function GridFloor() {
+// Connection beam between two nodes
+function Connection({ from, to, color }: {
+  from: [number, number, number]; to: [number, number, number]; color: string;
+}) {
+  const points = useMemo(() => [new THREE.Vector3(...from), new THREE.Vector3(...to)], [from, to]);
+  const geo = useMemo(() => new THREE.BufferGeometry().setFromPoints(points), [points]);
+  const line = useMemo(() => {
+    return new THREE.Line(
+      geo,
+      new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.25 })
+    );
+  }, [geo, color]);
+
+  return <primitive object={line} />;
+}
+
+// Animated data stream — traveling dashes along a path
+function DataStream({ from, to, color }: {
+  from: [number, number, number]; to: [number, number, number]; color: string;
+}) {
+  const ref = useRef<THREE.Points>(null);
+  const count = 8;
+  const positions = useMemo(() => new Float32Array(count * 3), []);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    const t = (state.clock.elapsedTime * 0.5) % 1;
+    for (let i = 0; i < count; i++) {
+      const frac = ((t + i / count) % 1);
+      positions[i * 3] = from[0] + (to[0] - from[0]) * frac;
+      positions[i * 3 + 1] = from[1] + (to[1] - from[1]) * frac;
+      positions[i * 3 + 2] = from[2] + (to[2] - from[2]) * frac;
+    }
+    ref.current.geometry.attributes.position.needsUpdate = true;
+  });
+
+  const geo = useMemo(() => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    return g;
+  }, [positions]);
+
   return (
-    <gridHelper 
-      args={[20, 20, '#4A90D9', '#1E4D8C']} 
-      position={[0, -3, 0]} 
-    />
+    <points ref={ref} geometry={geo}>
+      <pointsMaterial color={color} size={0.06} transparent opacity={0.9} sizeAttenuation />
+    </points>
   );
 }
 
 export default function ResourcesScene() {
-  const buildings = useMemo(() => [
-    { position: [-4, 0, 0] as [number, number, number], type: 'house' as const },
-    { position: [-2, 0.5, 0] as [number, number, number], type: 'hospital' as const },
-    { position: [0, -0.5, 0] as [number, number, number], type: 'school' as const },
-    { position: [2, 0, 0] as [number, number, number], type: 'food' as const },
-    { position: [4, 0.5, 0] as [number, number, number], type: 'legal' as const },
+  const nodes: { position: [number,number,number]; color: string; size?: number }[] = useMemo(() => [
+    { position: [0, 0, 0], color: '#4A90D9', size: 0.28 },      // center hub
+    { position: [-3, 1.5, -0.5], color: '#55efc4', size: 0.2 }, // housing
+    { position: [3, 1.5, -0.5], color: '#D97706', size: 0.2 },  // food
+    { position: [-2.5, -1.5, 0.5], color: '#9333EA', size: 0.2 }, // legal
+    { position: [2.5, -1.5, 0.5], color: '#DC2626', size: 0.2 },  // health
+    { position: [0, 2.8, -1], color: '#4A90D9', size: 0.16 },
+    { position: [-1.5, -2.8, -0.5], color: '#55efc4', size: 0.14 },
+    { position: [1.5, -2.8, -0.5], color: '#D97706', size: 0.14 },
+    { position: [-4, 0, 0], color: '#4A90D9', size: 0.14 },
+    { position: [4, 0, 0], color: '#9333EA', size: 0.14 },
   ], []);
+
+  const connections: Array<{from: [number,number,number]; to: [number,number,number]; color: string}> = useMemo(() => [
+    { from: nodes[0].position, to: nodes[1].position, color: '#55efc4' },
+    { from: nodes[0].position, to: nodes[2].position, color: '#D97706' },
+    { from: nodes[0].position, to: nodes[3].position, color: '#9333EA' },
+    { from: nodes[0].position, to: nodes[4].position, color: '#DC2626' },
+    { from: nodes[0].position, to: nodes[5].position, color: '#4A90D9' },
+    { from: nodes[1].position, to: nodes[5].position, color: '#55efc4' },
+    { from: nodes[2].position, to: nodes[4].position, color: '#D97706' },
+    { from: nodes[3].position, to: nodes[6].position, color: '#9333EA' },
+    { from: nodes[4].position, to: nodes[7].position, color: '#DC2626' },
+    { from: nodes[1].position, to: nodes[8].position, color: '#55efc4' },
+    { from: nodes[2].position, to: nodes[9].position, color: '#9333EA' },
+  ], [nodes]);
+
+  const groupRef = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.15) * 0.3;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+    }
+  });
 
   return (
     <group>
-      {buildings.map((b, i) => (
-        <ResourceBuilding key={i} {...b} />
-      ))}
-      <ConnectingLines />
-      <GridFloor />
+      <color attach="background" args={['#020d1a']} />
+      <fog attach="fog" args={['#020d1a', 10, 25]} />
+
+      <ambientLight intensity={0.1} color="#071525" />
+      <pointLight position={[0, 0, 2]} color="#4A90D9" intensity={5} distance={12} />
+      <Environment preset="night" />
+
+      <group ref={groupRef}>
+        {connections.map((c, i) => (
+          <Connection key={`c${i}`} {...c} />
+        ))}
+        {connections.map((c, i) => (
+          <DataStream key={`ds${i}`} {...c} />
+        ))}
+        {nodes.map((n, i) => (
+          <DataNode key={`n${i}`} {...n} />
+        ))}
+      </group>
+
+      <Sparkles count={200} scale={[18, 12, 10]} size={1.0} speed={0.2} color="#4A90D9" opacity={0.5} />
+      <Sparkles count={80} scale={[14, 8, 8]} size={0.6} speed={0.3} color="#55efc4" opacity={0.4} />
     </group>
   );
 }

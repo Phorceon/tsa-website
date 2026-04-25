@@ -1,0 +1,510 @@
+{
+  "desktop": [
+    {
+      "route": "/",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 797,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2519,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 3737,
+          "visible": 8,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 5658,
+          "visible": 6,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/events",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 19,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 991,
+          "visible": 19,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 1875,
+          "visible": 21,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 3125,
+          "visible": 23,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 4432,
+          "visible": 15,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/resources",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 17,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1003,
+          "visible": 17,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 1896,
+          "visible": 21,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 2952,
+          "visible": 21,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 4563,
+          "visible": 31,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/programs",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 21,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1088,
+          "visible": 23,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 1831,
+          "visible": 29,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 2779,
+          "visible": 29,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 4734,
+          "visible": 15,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/mental-health",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 9,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1342,
+          "visible": 11,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2159,
+          "visible": 14,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 3233,
+          "visible": 20,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 5336,
+          "visible": 25,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/volunteer",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 15,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1142,
+          "visible": 17,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2194,
+          "visible": 19,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 3370,
+          "visible": 25,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 4988,
+          "visible": 20,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/references",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 8,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1276,
+          "visible": 10,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2435,
+          "visible": 10,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 3377,
+          "visible": 16,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 5364,
+          "visible": 6,
+          "overflowX": 0
+        }
+      ]
+    }
+  ],
+  "mobile": [
+    {
+      "route": "/",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1297,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 3772,
+          "visible": 6,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 5929,
+          "visible": 5,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 8239,
+          "visible": 5,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/events",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 15,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1412,
+          "visible": 19,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2966,
+          "visible": 7,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 4645,
+          "visible": 4,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 6376,
+          "visible": 4,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/resources",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 8,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1528,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 3118,
+          "visible": 10,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 4839,
+          "visible": 10,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 6628,
+          "visible": 10,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/programs",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1423,
+          "visible": 20,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2918,
+          "visible": 18,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 4529,
+          "visible": 6,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 6207,
+          "visible": 7,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/mental-health",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 9,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1696,
+          "visible": 14,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 3471,
+          "visible": 9,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 5326,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 7141,
+          "visible": 9,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/volunteer",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 14,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1295,
+          "visible": 18,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 2938,
+          "visible": 12,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 4664,
+          "visible": 13,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 6449,
+          "visible": 11,
+          "overflowX": 0
+        }
+      ]
+    },
+    {
+      "route": "/references",
+      "errors": [],
+      "samples": [
+        {
+          "pct": 0,
+          "scrollY": 0,
+          "visible": 8,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.25,
+          "scrollY": 1447,
+          "visible": 10,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.5,
+          "scrollY": 3044,
+          "visible": 6,
+          "overflowX": 0
+        },
+        {
+          "pct": 0.75,
+          "scrollY": 4760,
+          "visible": 4,
+          "overflowX": 0
+        },
+        {
+          "pct": 1,
+          "scrollY": 6682,
+          "visible": 4,
+          "overflowX": 0
+        }
+      ]
+    }
+  ]
+}
