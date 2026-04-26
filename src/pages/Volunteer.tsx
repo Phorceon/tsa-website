@@ -31,20 +31,20 @@ export default function Volunteer() {
         secondary="#f59e0b"
         background="linear-gradient(135deg, #120502 0%, #250909 48%, #101406 100%)"
         icon={HandHeart}
-        images={[
-          {
-            url: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1800&q=80',
-            label: 'Volunteer Team',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=80',
-            label: 'Youth Helpers',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1800&q=80',
-            label: 'Community Action',
-          },
-        ]}
+  images={[
+    {
+      url: '/images/event-tracy-earth-day.jpg',
+      label: 'Tracy Earth Day community volunteering',
+    },
+    {
+      url: '/images/tracy-community-center.jpg',
+      label: 'Tracy Community Center',
+    },
+    {
+      url: '/images/lolly-hansen-senior-center.jpg',
+      label: 'Lolly Hansen Senior Center in Tracy',
+    },
+  ]}
         chapters={[
           {
             eyebrow: 'Volunteer & Give Back',
@@ -57,6 +57,7 @@ export default function Volunteer() {
             title: 'Four Ways',
             accent: 'Forward',
             align: 'right',
+            positionClassName: 'top-[13%] lg:pr-10',
             content: (
               <div className="space-y-3">
                 {[
@@ -65,11 +66,11 @@ export default function Volunteer() {
                   { icon: BookOpen, label: 'Tutor a Student', sub: 'Free & low-cost tutoring programs', color: '#4A90D9' },
                   { icon: Wrench, label: 'Share a Skill', sub: 'Teach neighbors what you know', color: '#16A34A' },
                 ].map(({ icon: Icon, label, sub, color }) => (
-                  <div key={label} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 px-5 py-4">
+                  <div key={label} className="flex items-center gap-4 border border-outline bg-surface px-5 py-4">
                     <Icon className="h-6 w-6 shrink-0" style={{ color }} />
                     <div>
-                      <p className="font-semibold text-white">{label}</p>
-                      <p className="text-sm text-white/60">{sub}</p>
+                      <p className="font-semibold text-ink">{label}</p>
+                      <p className="text-sm text-ink">{sub}</p>
                     </div>
                   </div>
                 ))}
@@ -85,7 +86,7 @@ export default function Volunteer() {
               <div className="pointer-events-auto flex flex-wrap gap-3">
                 {volunteerCauses.slice(0, 6).map(cause => (
                   <button key={cause} onClick={() => { setActiveCause(cause); setActiveTab('volunteer'); }}
-                    className="rounded-full border border-amber-500/30 bg-amber-500/20 px-4 py-2 text-sm font-medium text-amber-300 transition-all hover:bg-amber-500/30">{cause}</button>
+                    className="border border-amber-500/30 bg-amber-500/20 px-4 py-2 text-sm font-medium text-amber-300 transition-all hover:bg-amber-500/30">{cause}</button>
                 ))}
               </div>
             ),
@@ -97,7 +98,7 @@ export default function Volunteer() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="sticky top-16 z-30 bg-white/90 backdrop-blur-lg border-b border-border shadow-lg"
+        className="sticky top-16 z-30 bg-[#0a111a] border-b border-outline shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)]"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto gap-1 scrollbar-hide">
@@ -112,8 +113,8 @@ export default function Volunteer() {
                 whileTap={{ scale: 0.98 }}
                 className={`px-6 py-4 text-sm font-bold border-b-3 transition-all whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'border-navy text-navy bg-navy-light/30'
-                    : 'border-transparent text-textsecondary hover:text-navy hover:bg-gray-50'
+                    ? 'border-outline text-ink bg-canvas'
+                    : 'border-transparent text-textsecondary hover:text-ink hover:bg-gray-50'
                 }`}
               >
                 {tab.label}
@@ -127,7 +128,7 @@ export default function Volunteer() {
         <motion.section 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="py-16 bg-gradient-to-b from-offwhite via-white to-offwhite"
+          className="py-16 bg-surface"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -136,10 +137,10 @@ export default function Volunteer() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+              <span className="inline-block px-4 py-2 bg-surface text-xs font-medium uppercase tracking-widest text-ink mb-4">
                 Volunteer Opportunities
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy">
+              <h2 className="text-3xl md:text-4xl font-bold text-ink">
                 Local organizations seeking dedicated helpers
               </h2>
             </motion.div>
@@ -160,10 +161,10 @@ export default function Volunteer() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveCause(cause)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                  className={`px-4 py-2  text-sm font-semibold transition-all ${
                     activeCause === cause
-                      ? 'bg-navy text-white shadow-lg shadow-navy/30'
-                      : 'bg-lightgray text-textsecondary hover:bg-navy-light hover:text-navy'
+                      ? 'bg-canvas text-ink  shadow-navy/30'
+                      : 'bg-lightgray text-textsecondary hover:bg-canvas hover:text-ink'
                   }`}
                 >
                   {cause}
@@ -181,17 +182,17 @@ export default function Volunteer() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                     whileHover={{ y: -5, rotateX: 3 }}
-                    className="bg-white rounded-2xl border border-border p-8 shadow-lg hover:shadow-2xl transition-all"
+                    className="bg-surface border border-border p-8 hover: transition-all"
                   >
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="inline-flex items-center gap-2 text-sm font-semibold px-3 py-1 rounded-full bg-sky/10 text-sky">
+                          <span className="inline-flex items-center gap-2 text-sm font-semibold px-3 py-1 bg-surface text-ink">
                             {opp.cause}
                           </span>
                           <span className="text-textsecondary">{opp.commitment}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-navy mb-3">{opp.organization}</h3>
+                        <h3 className="text-xl font-bold text-ink mb-3">{opp.organization}</h3>
                         <p className="text-textsecondary mb-3">{opp.description}</p>
                         <p className="text-textsecondary font-medium">{opp.contact}</p>
                       </div>
@@ -200,13 +201,13 @@ export default function Volunteer() {
                           href={opp.applyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="shrink-0 inline-flex items-center gap-2 bg-navy text-white font-bold px-6 py-3 rounded-xl hover:bg-navy-dark transition-all hover:scale-105 hover:shadow-xl self-start"
+                          className="shrink-0 inline-flex items-center gap-2 bg-canvas text-ink font-bold px-6 py-3 hover:bg-canvas transition-all hover:scale-100 hover: self-start"
                         >
                           Apply
                           <ExternalLink className="w-4 h-4" />
                         </a>
                       ) : (
-                        <span className="shrink-0 inline-flex items-center gap-2 bg-lightgray text-textsecondary font-semibold px-6 py-3 rounded-xl self-start">
+                        <span className="shrink-0 inline-flex items-center gap-2 bg-lightgray text-textsecondary font-semibold px-6 py-3 self-start">
                           Contact for Details
                         </span>
                       )}
@@ -223,7 +224,7 @@ export default function Volunteer() {
         <motion.section 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="py-16 bg-gradient-to-b from-offwhite via-white to-offwhite"
+          className="py-16 bg-surface"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -232,10 +233,10 @@ export default function Volunteer() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-block px-4 py-2 bg-success/10 rounded-full text-xs font-medium uppercase tracking-widest text-success mb-4">
+              <span className="inline-block px-4 py-2 bg-success/10 text-xs font-medium uppercase tracking-widest text-success mb-4">
                 Make a Donation
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy">
+              <h2 className="text-3xl md:text-4xl font-bold text-ink">
                 Support organizations making a real impact
               </h2>
             </motion.div>
@@ -249,10 +250,10 @@ export default function Volunteer() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15, duration: 0.5 }}
                   whileHover={{ y: -10, rotateX: 5 }}
-                  className="bg-white rounded-2xl border border-border p-8 shadow-lg hover:shadow-2xl transition-all flex flex-col"
+                  className="bg-surface border border-border p-8 hover: transition-all flex flex-col"
                 >
-                  <HandHeart className="w-12 h-12 text-sky mb-5" />
-                  <h3 className="text-xl font-bold text-navy mb-3">{org.name}</h3>
+                  <HandHeart className="w-12 h-12 text-ink mb-5" />
+                  <h3 className="text-xl font-bold text-ink mb-3">{org.name}</h3>
                   <p className="text-textsecondary mb-6 flex-1">{org.description}</p>
                   <ul className="space-y-3 mb-6">
                     {org.impact.map((item, j) => (
@@ -266,7 +267,7 @@ export default function Volunteer() {
                     href={org.donateUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-success text-white font-bold px-6 py-3 rounded-xl hover:bg-green-700 transition-all hover:scale-105 hover:shadow-xl"
+                    className="inline-flex items-center justify-center gap-2 bg-success text-ink font-bold px-6 py-3 hover:bg-green-700 transition-all hover:scale-100 hover:"
                   >
                     Donate Now
                     <ExternalLink className="w-4 h-4" />
@@ -279,9 +280,9 @@ export default function Volunteer() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-10 bg-navy-light rounded-2xl p-8 text-center"
+              className="mt-10 bg-canvas p-8 text-center"
             >
-              <p className="text-navy">
+              <p className="text-ink">
                 <span className="font-bold">In-Kind Donations:</span> Many organizations also need hygiene products, non-perishable food, clothing, and household items. Contact them directly to arrange drop-off.
               </p>
             </motion.div>
@@ -293,7 +294,7 @@ export default function Volunteer() {
         <motion.section 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="py-16 bg-gradient-to-b from-offwhite via-white to-offwhite"
+          className="py-16 bg-surface"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -302,10 +303,10 @@ export default function Volunteer() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+              <span className="inline-block px-4 py-2 bg-surface text-xs font-medium uppercase tracking-widest text-ink mb-4">
                 Free & Low-Cost Tutoring
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy">
+              <h2 className="text-3xl md:text-4xl font-bold text-ink">
                 Connect with local tutors and mentoring programs
               </h2>
             </motion.div>
@@ -319,25 +320,25 @@ export default function Volunteer() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-2xl border border-border p-8 shadow-lg hover:shadow-xl transition-all"
+                  className="bg-surface border border-border p-8 hover: transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <BookOpen className="w-10 h-10 text-sky" />
-                    <span className={`text-sm font-semibold px-3 py-1 rounded-full ${tutor.cost === 'Free' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'}`}>
+                    <BookOpen className="w-10 h-10 text-ink" />
+                    <span className={`text-sm font-semibold px-3 py-1  ${tutor.cost === 'Free' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'}`}>
                       {tutor.cost}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-navy mb-3">{tutor.name}</h3>
+                  <h3 className="text-xl font-bold text-ink mb-3">{tutor.name}</h3>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {tutor.subjects.map((s) => (
-                      <span key={s} className="text-sm bg-navy-light text-navy px-3 py-1 rounded-full">{s}</span>
+                      <span key={s} className="text-sm bg-canvas text-ink px-3 py-1">{s}</span>
                     ))}
                   </div>
                   <div className="space-y-2 text-textsecondary mb-4">
                     <p><span className="font-medium text-textprimary">Grades:</span> {tutor.gradeLevels}</p>
                     <p><span className="font-medium text-textprimary">Schedule:</span> {tutor.availability}</p>
                     <p>{tutor.description}</p>
-                    <p className="font-medium text-navy">{tutor.contact}</p>
+                    <p className="font-medium text-ink">{tutor.contact}</p>
                   </div>
                 </motion.div>
               ))}
@@ -347,9 +348,9 @@ export default function Volunteer() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="max-w-xl mx-auto bg-white rounded-2xl border border-border p-10 shadow-2xl"
+              className="max-w-xl mx-auto bg-surface border border-border p-10"
             >
-              <h3 className="text-2xl font-bold text-navy mb-6 text-center">Request a Tutor</h3>
+              <h3 className="text-2xl font-bold text-ink mb-6 text-center">Request a Tutor</h3>
               {tutorSubmitted ? (
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -357,31 +358,31 @@ export default function Volunteer() {
                   className="text-center py-8"
                 >
                   <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
-                  <p className="text-navy font-bold text-lg">Thank you! Your request has been submitted.</p>
+                  <p className="text-ink font-bold text-lg">Thank you! Your request has been submitted.</p>
                   <p className="text-textsecondary mt-2">A tutor coordinator will contact you within 2-3 business days.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={(e) => { e.preventDefault(); setTutorSubmitted(true); }} className="space-y-5">
                   <div>
                     <label className="text-sm font-semibold text-textprimary mb-2 block">Your Name</label>
-                    <input type="text" required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" />
+                    <input type="text" required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" />
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-textprimary mb-2 block">Email</label>
-                    <input type="email" required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" />
+                    <input type="email" required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" />
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-textprimary mb-2 block">Student Grade</label>
-                    <select required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all">
+                    <select required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all">
                       <option value="">Select grade</option>
                       {['K', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>{g === 'K' ? 'Kindergarten' : `Grade ${g}`}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-textprimary mb-2 block">Subject Needs</label>
-                    <textarea required rows={3} className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" placeholder="What subjects does the student need help with?" />
+                    <textarea required rows={3} className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" placeholder="What subjects does the student need help with?" />
                   </div>
-                  <button type="submit" className="w-full bg-navy text-white font-bold py-4 rounded-xl hover:bg-navy-dark transition-all hover:scale-[1.02] hover:shadow-xl">
+                  <button type="submit" className="w-full bg-canvas text-ink font-bold py-4 hover:bg-canvas transition-all hover:scale-100] hover:">
                     Submit Request
                   </button>
                 </form>
@@ -395,7 +396,7 @@ export default function Volunteer() {
         <motion.section 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="py-16 bg-gradient-to-b from-offwhite via-white to-offwhite"
+          className="py-16 bg-surface"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -404,10 +405,10 @@ export default function Volunteer() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-block px-4 py-2 bg-purple-600/10 rounded-full text-xs font-medium uppercase tracking-widest text-purple-600 mb-4">
+              <span className="inline-block px-4 py-2 bg-purple-600/10 text-xs font-medium uppercase tracking-widest text-purple-600 mb-4">
                 Share Your Skills
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy">
+              <h2 className="text-3xl md:text-4xl font-bold text-ink">
                 Offer your talents to help neighbors in need
               </h2>
             </motion.div>
@@ -418,7 +419,7 @@ export default function Volunteer() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-xl font-bold text-navy mb-6">Current Skill Listings</h3>
+                <h3 className="text-xl font-bold text-ink mb-6">Current Skill Listings</h3>
                 <div className="space-y-5">
                   {skills.map((skill, i) => (
                     <motion.div
@@ -428,15 +429,15 @@ export default function Volunteer() {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
                       whileHover={{ x: 5 }}
-                      className="bg-white rounded-2xl border border-border p-6 shadow-lg hover:shadow-xl transition-all"
+                      className="bg-surface border border-border p-6 hover: transition-all"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-bold text-navy">{skill.skill}</h4>
-                        <span className="text-sm bg-navy-light text-navy px-3 py-1 rounded-full">{skill.category}</span>
+                        <h4 className="font-bold text-ink">{skill.skill}</h4>
+                        <span className="text-sm bg-canvas text-ink px-3 py-1">{skill.category}</span>
                       </div>
                       <p className="text-textsecondary mb-3">{skill.description}</p>
                       <p className="text-sm text-textsecondary mb-2">Available: {skill.availability}</p>
-                      <p className="text-sky font-medium">{skill.contact}</p>
+                      <p className="text-ink font-medium">{skill.contact}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -447,8 +448,8 @@ export default function Volunteer() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-xl font-bold text-navy mb-6">Post Your Skill</h3>
-                <div className="bg-white rounded-2xl border border-border p-8 shadow-2xl">
+                <h3 className="text-xl font-bold text-ink mb-6">Post Your Skill</h3>
+                <div className="bg-surface border border-border p-8">
                   {skillSubmitted ? (
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -456,35 +457,35 @@ export default function Volunteer() {
                       className="text-center py-10"
                     >
                       <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
-                      <p className="text-navy font-bold text-lg">Thank you! Your listing has been submitted for review.</p>
+                      <p className="text-ink font-bold text-lg">Thank you! Your listing has been submitted for review.</p>
                       <p className="text-textsecondary mt-2">It will appear on the site after approval.</p>
                     </motion.div>
                   ) : (
                     <form onSubmit={(e) => { e.preventDefault(); setSkillSubmitted(true); }} className="space-y-5">
                       <div>
                         <label className="text-sm font-semibold text-textprimary mb-2 block">Your Name</label>
-                        <input type="text" required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" />
+                        <input type="text" required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" />
                       </div>
                       <div>
                         <label className="text-sm font-semibold text-textprimary mb-2 block">Skill Category</label>
-                        <select required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all">
+                        <select required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all">
                           {skillCategories.map(c => <option key={c} value={c}>{c}</option>)}
                           <option value="Other">Other</option>
                         </select>
                       </div>
                       <div>
                         <label className="text-sm font-semibold text-textprimary mb-2 block">Skill Description</label>
-                        <textarea required rows={3} className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" placeholder="Describe what you can help with..." />
+                        <textarea required rows={3} className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" placeholder="Describe what you can help with..." />
                       </div>
                       <div>
                         <label className="text-sm font-semibold text-textprimary mb-2 block">Availability</label>
-                        <input type="text" required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" placeholder="e.g., Weekends, evenings" />
+                        <input type="text" required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" placeholder="e.g., Weekends, evenings" />
                       </div>
                       <div>
                         <label className="text-sm font-semibold text-textprimary mb-2 block">Contact (email or phone)</label>
-                        <input type="text" required className="w-full px-4 py-3 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all" />
+                        <input type="text" required className="w-full px-4 py-3 border-2 border-border focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all" />
                       </div>
-                      <button type="submit" className="w-full bg-navy text-white font-bold py-4 rounded-xl hover:bg-navy-dark transition-all hover:scale-[1.02] hover:shadow-xl">
+                      <button type="submit" className="w-full bg-canvas text-ink font-bold py-4 hover:bg-canvas transition-all hover:scale-100] hover:">
                         Submit Listing
                       </button>
                       <p className="text-xs text-textsecondary text-center">Listings are reviewed before posting. No payment processing on this site.</p>

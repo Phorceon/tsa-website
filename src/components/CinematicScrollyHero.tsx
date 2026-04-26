@@ -11,6 +11,7 @@ interface CinematicChapter {
   description?: string;
   content?: React.ReactNode;
   align?: 'left' | 'right';
+  positionClassName?: string;
 }
 
 interface CinematicScrollyHeroProps {
@@ -20,7 +21,7 @@ interface CinematicScrollyHeroProps {
   background: string;
   icon: LucideIcon;
   chapters: CinematicChapter[];
-  images: {
+  images?: {
     url: string;
     label: string;
   }[];
@@ -40,7 +41,6 @@ function ScrollyChapter({
   index,
   progress,
   accent,
-  secondary,
 }: {
   chapter: CinematicChapter;
   index: number;
@@ -60,45 +60,45 @@ function ScrollyChapter({
   return (
     <motion.div
       style={{ opacity, y, scale }}
-      className={`absolute inset-x-0 top-[47%] -translate-y-1/2 px-5 sm:px-6 lg:px-8 ${
+      className={`absolute inset-x-0 top-[20%] px-5 sm:px-6 lg:px-8 ${
         isRight ? 'lg:flex lg:justify-end' : ''
-      }`}
+      } ${chapter.positionClassName ?? ''}`}
     >
       <div className={`max-w-7xl mx-auto w-full ${isRight ? 'lg:flex lg:justify-end' : ''}`}>
         <div className="max-w-3xl">
           <span
-            className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80 shadow-lg backdrop-blur-md"
+            className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white"
             style={{ borderColor: `${accent}66`, background: `${accent}24` }}
           >
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: accent, boxShadow: `0 0 18px ${accent}` }} />
+            <span className="h-1.5 w-1.5" style={{ background: accent, boxShadow: `0 0 18px ${accent}` }} />
             {chapter.eyebrow}
           </span>
           <motion.h1
             style={{ x: titleX }}
-            className="mt-4 font-playfair text-5xl font-bold leading-[0.92] text-white drop-shadow-2xl sm:text-6xl md:text-7xl"
+            className="mt-4 font-black tracking-tighter uppercase text-5xl font-bold leading-[0.92] text-ink drop- sm:text-6xl md:text-7xl"
           >
             {chapter.title}
             <br />
             <span style={{ color: accent }}>{chapter.accent}</span>
           </motion.h1>
           {chapter.description && (
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink md:text-xl">
               {chapter.description}
             </p>
           )}
           {index === 0 && (
-            <div className="mt-8 flex items-center gap-3 text-white/45">
+            <div className="mt-8 flex items-center gap-3 text-ink">
               <ArrowDown className="h-5 w-5 animate-bounce" />
               <span className="text-xs font-semibold uppercase tracking-[0.24em]">Scroll to explore</span>
             </div>
           )}
           {chapter.content && (
             <div
-              className="mt-5 max-w-2xl rounded-[1.5rem] border p-4 shadow-2xl backdrop-blur-xl sm:p-5"
+              className={`mt-5 max-w-2xl border border-outline bg-surface p-6 sm:p-8 ${
+                isRight ? 'border-r-0' : ''
+              }`}
               style={{
-                borderColor: `${secondary}3d`,
-                background: 'linear-gradient(135deg, rgba(2,6,23,0.62), rgba(15,23,42,0.36))',
-                boxShadow: `0 28px 90px rgba(0,0,0,0.32), 0 0 70px ${accent}14`,
+                boxShadow: 'none',
               }}
             >
               {chapter.content}
@@ -128,7 +128,7 @@ function FloatingDot({
   return (
     <motion.span
       aria-hidden
-      className="absolute h-2 w-2 rounded-full"
+      className="absolute h-2 w-2"
       style={{
         left: `${10 + dot * 16}%`,
         top: `${18 + (dot % 3) * 22}%`,
@@ -224,15 +224,15 @@ export default function CinematicScrollyHero({
     return (
       <section className="relative overflow-hidden px-5 py-24 sm:px-6 lg:px-8" style={{ background }}>
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: tonePatterns[tone], backgroundSize: '64px 64px' }} />
-        <div className="absolute inset-0 bg-slate-950/70" />
+        <div className="absolute inset-0 bg-surface" />
         <div className="relative z-10 mx-auto grid max-w-7xl gap-8">
           {chapters.map((chapter) => (
-            <article key={`${chapter.eyebrow}-${chapter.title}`} className="max-w-4xl rounded-[1.5rem] border border-white/10 bg-slate-950/40 p-6 text-white shadow-2xl">
+            <article key={`${chapter.eyebrow}-${chapter.title}`} className="max-w-4xl rounded-[1.5rem] border border-outline bg-surface p-6 text-ink">
               <span className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: accent }}>{chapter.eyebrow}</span>
-              <h1 className="mt-4 font-playfair text-4xl font-bold leading-tight sm:text-5xl">
+              <h1 className="mt-4 font-black tracking-tighter uppercase text-4xl font-bold leading-tight sm:text-5xl">
                 {chapter.title} <span style={{ color: accent }}>{chapter.accent}</span>
               </h1>
-              {chapter.description && <p className="mt-4 max-w-2xl text-lg text-white/75">{chapter.description}</p>}
+              {chapter.description && <p className="mt-4 max-w-2xl text-lg text-ink">{chapter.description}</p>}
               {chapter.content && <div className="mt-5">{chapter.content}</div>}
             </article>
           ))}
@@ -244,17 +244,17 @@ export default function CinematicScrollyHero({
   return (
     <div ref={ref} className="relative h-[360vh] md:h-[430vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="absolute inset-0" style={{ background }} />
-        <div className="absolute inset-0">
-          {images.map((image, index) => (
-            <PhotoLayer
-              key={`${image.url}-${index}`}
-              image={image}
-              index={index}
-              total={images.length}
-              progress={progress}
-            />
-          ))}
+      <div className="absolute inset-0" style={{ background }} />
+      <div className="absolute inset-0">
+        {images?.map((image, index) => (
+          <PhotoLayer
+            key={`${image.url}-${index}`}
+            image={image}
+            index={index}
+            total={images.length}
+            progress={progress}
+          />
+        ))}
           <motion.div
             aria-hidden
             className="absolute inset-[-12%] opacity-35 mix-blend-screen"
@@ -268,27 +268,28 @@ export default function CinematicScrollyHero({
         </div>
         <motion.div
           aria-hidden
-          className="absolute -left-32 top-10 h-[42rem] w-[42rem] rounded-full blur-3xl"
+          className="absolute -left-32 top-10 h-[42rem] w-[42rem]"
           style={{ background: `radial-gradient(circle, ${accent}30, transparent 68%)`, x: driftX, y: driftY }}
         />
         <motion.div
           aria-hidden
-          className="absolute -right-32 bottom-[-9rem] h-[38rem] w-[38rem] rounded-full blur-3xl"
+          className="absolute -right-32 bottom-[-9rem] h-[38rem] w-[38rem]"
           style={{ background: `radial-gradient(circle, ${secondary}30, transparent 70%)`, x: driftY, y: driftX }}
         />
         <motion.div
           aria-hidden
-          className="absolute left-1/2 top-1/2 hidden h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full border md:block"
+          className="absolute left-1/2 top-1/2 hidden h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 border md:block"
           style={{ borderColor: `${accent}1f`, rotate }}
         />
         <motion.div
           aria-hidden
-          className="absolute right-[7%] top-[12%] text-white/[0.055]"
+          className="absolute right-[7%] top-[12%] text-ink/[0.055]"
           style={{ rotate, scale: iconScale }}
         >
           <Icon className="h-56 w-56 md:h-80 md:w-80" />
         </motion.div>
 
+      {images && images.length > 0 && (
         <motion.div
           aria-hidden
           className="absolute bottom-8 right-5 hidden w-[31rem] gap-3 md:grid md:grid-cols-3"
@@ -297,28 +298,27 @@ export default function CinematicScrollyHero({
           {images.slice(0, 3).map((image, index) => (
             <div
               key={`${image.label}-${index}`}
-              className="h-28 overflow-hidden rounded-xl border border-white/15 bg-cover bg-center shadow-2xl"
+              className="h-28 overflow-hidden border border-outline bg-cover bg-center"
               style={{ backgroundImage: `url("${image.url}")` }}
             >
-              <div className="flex h-full items-end bg-gradient-to-t from-black/70 to-transparent p-3">
-                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/80">{image.label}</span>
+              <div className="flex h-full items-end bg-canvas/60 p-3">
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-ink">{image.label}</span>
               </div>
             </div>
           ))}
         </motion.div>
+      )}
 
         {[0, 1, 2, 3, 4, 5].map((dot) => (
           <FloatingDot key={dot} dot={dot} progress={progress} accent={accent} secondary={secondary} />
         ))}
 
-        <motion.div
-          aria-hidden
-          className="absolute inset-y-0 w-1/2 skew-x-[-18deg] bg-white/[0.055] blur-sm"
-          style={{ x: sweep }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(2,6,23,0.2)_0%,rgba(2,6,23,0.62)_72%,rgba(2,6,23,0.9)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/88 via-slate-950/44 to-slate-950/62" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/58 via-transparent to-slate-950/90" />
+      <motion.div
+      aria-hidden
+      className="absolute inset-y-0 w-1/2 skew-x-[-18deg] bg-white/[0.03]"
+      style={{ x: sweep }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(2,6,23,0.15)_0%,rgba(2,6,23,0.4)_72%,rgba(2,6,23,0.75)_100%)]" />
 
         <div className="absolute inset-0 z-10">
           {chapters.map((chapter, index) => (
