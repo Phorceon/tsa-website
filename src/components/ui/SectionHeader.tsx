@@ -16,14 +16,14 @@ export default function SectionHeader({ eyebrow, title, subtitle, align = 'cente
       ref={ref}
       className={`reveal ${isRevealed ? 'revealed' : ''} ${align === 'center' ? 'text-center' : 'text-left'}`}
     >
-      <span className={`inline-block text-xs font-medium uppercase tracking-widest mb-3 ${light ? 'text-sky' : 'text-sky'}`}>
+      <span className={`inline-block text-xs font-medium uppercase tracking-widest mb-3 ${light ? 'text-ink' : 'text-ink'}`}>
         {eyebrow}
       </span>
-      <h2 className={`text-3xl md:text-4xl font-bold mb-3 ${light ? 'text-white' : 'text-navy'}`}>
+      <h2 className={`text-3xl md:text-4xl font-bold mb-3 ${light ? 'text-ink' : 'text-ink'}`}>
         {title}
       </h2>
       {subtitle && (
-        <p className={`text-base md:text-lg max-w-2xl ${align === 'center' ? 'mx-auto' : ''} ${light ? 'text-white/80' : 'text-textsecondary'}`}>
+        <p className={`text-base md:text-lg max-w-2xl ${align === 'center' ? 'mx-auto' : ''} ${light ? 'text-ink' : 'text-textsecondary'}`}>
           {subtitle}
         </p>
       )}

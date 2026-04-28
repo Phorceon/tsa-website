@@ -6,6 +6,7 @@ import { Info, ExternalLink, Dumbbell, Palette, FlaskConical, Footprints } from 
 import ProgramCard from '@/components/cards/ProgramCard';
 import { programs, programAgeGroups, programCategories, programCosts } from '@/data/programs';
 import CinematicScrollyHero from '@/components/CinematicScrollyHero';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 export default function Programs() {
   const [ageFilter, setAgeFilter] = useState('All');
@@ -46,20 +47,20 @@ export default function Programs() {
         secondary="#22c55e"
         background="linear-gradient(135deg, #070214 0%, #16072b 46%, #021507 100%)"
         icon={Dumbbell}
-        images={[
-          {
-            url: 'https://www.cityoftracy.org/files/assets/city/v/1/parks-and-rec/images/images-26-b-summer-2026/recreation-programs/summer-adventure-camp.jpg',
-            label: 'Summer Camp',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=80',
-            label: 'Group Activities',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1800&q=80',
-            label: 'Youth Sports',
-          },
-        ]}
+  images={[
+    {
+      url: '/images/tracy-community-center-hall.jpg',
+      label: 'Tracy Community Center Classes',
+    },
+    {
+      url: '/images/program-senior-fitness.jpg',
+      label: 'Tracy Senior Fitness',
+    },
+    {
+      url: '/images/joe-wilson-pool.jpg',
+      label: 'Joe Wilson Pool Programs',
+    },
+  ]}
         chapters={[
           {
             eyebrow: 'Community Programs',
@@ -75,13 +76,13 @@ export default function Programs() {
             content: (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {programTypes.map(({ icon: Icon, label, desc, color }) => (
-                  <div key={label} className="rounded-[1.25rem] border border-white/10 bg-white/10 p-4 shadow-xl">
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl" style={{ background: `${color}20`, border: `1px solid ${color}40` }}>
+                  <LiquidGlass key={label} intensity="subtle" className="rounded-[1.25rem] p-4">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center" style={{ background: `${color}20`, border: `1px solid ${color}40` }}>
                       <Icon className="h-6 w-6" style={{ color }} />
                     </div>
-                    <h3 className="text-lg font-bold text-white">{label}</h3>
-                    <p className="text-sm text-white/60">{desc}</p>
-                  </div>
+                    <h3 className="text-lg font-bold text-ink">{label}</h3>
+                    <p className="text-sm text-ink">{desc}</p>
+                  </LiquidGlass>
                 ))}
               </div>
             ),
@@ -95,23 +96,23 @@ export default function Programs() {
               <div className="pointer-events-auto space-y-4">
                 {filterGroups.map((group) => (
                   <div key={group.label} className="flex flex-wrap items-center gap-3">
-                    <span className="min-w-[90px] text-sm font-semibold uppercase tracking-wider text-white/60">{group.label}</span>
+                    <span className="min-w-[90px] text-sm font-semibold uppercase tracking-wider text-ink">{group.label}</span>
                     {group.options.map((opt) => (
                       <button key={opt} onClick={() => group.setter(opt)}
-                        className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
-                          group.value === opt ? 'bg-white text-navy shadow-lg' : 'border border-white/20 bg-white/15 text-white/80 hover:bg-white/25'
+                        className={` px-4 py-2 text-sm font-semibold transition-all ${
+                          group.value === opt ? 'bg-surface text-ink ' : 'border border-outline bg-surface text-ink hover:bg-surface'
                         }`}>{opt}</button>
                     ))}
                   </div>
                 ))}
-                {hasFilters && <button onClick={clearFilters} className="text-sm text-white/70 transition-colors hover:text-white">Clear Filters</button>}
+                {hasFilters && <button onClick={clearFilters} className="text-sm text-ink transition-colors hover:text-ink">Clear Filters</button>}
               </div>
             ),
           },
         ]}
       />
 
-      <section className="py-16 pb-24 bg-gradient-to-b from-navy to-offwhite">
+      <section className="py-16 pb-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredPrograms.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -148,9 +149,9 @@ export default function Programs() {
               className="text-center py-20"
             >
               <Info className="w-16 h-16 text-textsecondary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-navy mb-2">No programs found</h3>
+              <h3 className="text-2xl font-bold text-ink mb-2">No programs found</h3>
               <p className="text-textsecondary mb-6">Try adjusting your filters to see more results.</p>
-              <button onClick={clearFilters} className="bg-navy text-white font-semibold px-6 py-3 rounded-lg hover:bg-navy-dark transition-colors">
+              <button onClick={clearFilters} className="bg-canvas text-ink font-semibold px-6 py-3 hover:bg-canvas transition-colors">
                 Clear All Filters
               </button>
             </motion.div>
@@ -162,7 +163,7 @@ export default function Programs() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="bg-gradient-to-r from-navy-light via-white to-navy-light py-16"
+        className="bg-surface py-16"
       >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -172,12 +173,12 @@ export default function Programs() {
             transition={{ type: 'spring' }}
           >
             <div className="flex items-center justify-center gap-3 mb-4">
-              <Info className="w-6 h-6 text-navy" />
-              <h3 className="text-2xl font-bold text-navy">How to Register</h3>
+              <Info className="w-6 h-6 text-ink" />
+              <h3 className="text-2xl font-bold text-ink">How to Register</h3>
             </div>
           </motion.div>
           
-          <p className="text-navy/80 mb-6 text-lg">
+          <p className="text-ink mb-6 text-lg">
             Most programs can be registered online at tracyartsandrec.com or by calling 209-831-6200. 
             Walk-in registration is also available at the Tracy Community Center.
           </p>
@@ -185,7 +186,7 @@ export default function Programs() {
             href="https://tracyartsandrec.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-navy text-white font-bold px-8 py-4 rounded-xl hover:bg-navy-dark transition-all hover:scale-105 hover:shadow-2xl hover:shadow-navy/30"
+            className="inline-flex items-center gap-2 bg-canvas text-ink font-bold px-8 py-4 hover:bg-canvas transition-all hover:scale-100 hover: hover:shadow-navy/30"
           >
             Visit TracyArtsandRec.com
             <ExternalLink className="w-5 h-5" />

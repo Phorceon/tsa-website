@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Canvas } from '@react-three/fiber';
-import { Building2, Heart, Link2, Rocket, Shield, AlertTriangle, ArrowRight, Users, Calendar, HandHeart } from 'lucide-react';
+import { Building2, Heart, Link2, Rocket, Shield, AlertTriangle, ArrowRight, Calendar, HandHeart } from 'lucide-react';
 import { Sparkles } from '@react-three/drei';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,6 +12,7 @@ import QuickAccessGrid from '@/components/cards/QuickAccessCard';
 import EventCard from '@/components/cards/EventCard';
 import { events } from '@/data/events';
 import HeroScene from '@/components/3d/HeroScene';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -159,12 +160,13 @@ function ParallaxHero() {
 
         {/* Section 2: Local Businesses */}
         <div className="absolute inset-0 flex items-start justify-end px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-          <motion.div style={{ opacity: businessOpacity, y: businessY }} className="max-w-lg pointer-events-auto border border-outline bg-surface p-8">
+          <motion.div style={{ opacity: businessOpacity, y: businessY }} className="max-w-lg pointer-events-auto">
+            <LiquidGlass intensity="medium" className="p-8">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-14 h-14 border border-outline bg-canvas flex items-center justify-center">
+              <div className="w-14 h-14 border border-white/[0.08] bg-white/[0.04] flex items-center justify-center">
                 <Building2 className="w-7 h-7 text-ink" />
               </div>
-              <div className="w-12 h-[1px] bg-outline" />
+              <div className="w-12 h-[1px] bg-white/[0.12]" />
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-ink mb-4 uppercase tracking-tighter">
               Local Businesses
@@ -172,20 +174,22 @@ function ParallaxHero() {
             <p className="text-lg text-ink/70 leading-relaxed mb-6 max-w-md font-mono">
               Discover and support the shops, restaurants, and services that build the foundation of our community.
             </p>
-            <Link to="/resources?category=business" className="inline-flex items-center gap-2 px-6 py-3 bg-surface hover:bg-outline text-ink border border-outline font-bold transition-all">
+            <Link to="/resources?category=business" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.06] hover:bg-white/[0.10] text-ink border border-white/[0.10] font-bold transition-all">
               View Directory <ArrowRight className="w-4 h-4" />
             </Link>
+            </LiquidGlass>
           </motion.div>
         </div>
 
         {/* Section 3: Non-Profits */}
         <div className="absolute inset-0 flex items-start justify-start px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-          <motion.div style={{ opacity: npoOpacity, y: npoY }} className="max-w-lg pointer-events-auto border border-outline bg-surface p-8">
+          <motion.div style={{ opacity: npoOpacity, y: npoY }} className="max-w-lg pointer-events-auto">
+            <LiquidGlass intensity="medium" className="p-8">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-14 h-14 border border-outline bg-canvas flex items-center justify-center">
+              <div className="w-14 h-14 border border-white/[0.08] bg-white/[0.04] flex items-center justify-center">
                 <Heart className="w-7 h-7 text-ink" />
               </div>
-              <div className="w-12 h-[1px] bg-outline" />
+              <div className="w-12 h-[1px] bg-white/[0.12]" />
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-ink mb-4 uppercase tracking-tighter">
               Non-Profit Organizations
@@ -193,20 +197,22 @@ function ParallaxHero() {
             <p className="text-lg text-ink/70 leading-relaxed mb-6 max-w-md font-mono">
               Connect with local charities, find volunteer opportunities, and make a real difference in Tracy.
             </p>
-            <Link to="/resources?category=npo" className="inline-flex items-center gap-2 px-6 py-3 bg-surface hover:bg-outline text-ink border border-outline font-bold transition-all">
+            <Link to="/resources?category=npo" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.06] hover:bg-white/[0.10] text-ink border border-white/[0.10] font-bold transition-all">
               Get Involved <ArrowRight className="w-4 h-4" />
             </Link>
+            </LiquidGlass>
           </motion.div>
         </div>
 
         {/* Section 4: City Services */}
         <div className="absolute inset-0 flex items-start justify-end px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-          <motion.div style={{ opacity: servicesOpacity, y: servicesY }} className="max-w-lg pointer-events-auto border border-outline bg-surface p-8">
+          <motion.div style={{ opacity: servicesOpacity, y: servicesY }} className="max-w-lg pointer-events-auto">
+            <LiquidGlass intensity="medium" className="p-8">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-14 h-14 border border-outline bg-canvas flex items-center justify-center">
+              <div className="w-14 h-14 border border-white/[0.08] bg-white/[0.04] flex items-center justify-center">
                 <Shield className="w-7 h-7 text-ink" />
               </div>
-              <div className="w-12 h-[1px] bg-outline" />
+              <div className="w-12 h-[1px] bg-white/[0.12]" />
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-ink mb-4 uppercase tracking-tighter">
               City & Social Services
@@ -214,9 +220,10 @@ function ParallaxHero() {
             <p className="text-lg text-ink/70 leading-relaxed mb-6 max-w-md font-mono">
               Access critical support when you need it most. Mental health resources, city planning, and more.
             </p>
-            <Link to="/resources?category=services" className="inline-flex items-center gap-2 px-6 py-3 bg-surface hover:bg-outline text-ink border border-outline font-bold transition-all">
+            <Link to="/resources?category=services" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.06] hover:bg-white/[0.10] text-ink border border-white/[0.10] font-bold transition-all">
               Access Services <ArrowRight className="w-4 h-4" />
             </Link>
+            </LiquidGlass>
           </motion.div>
         </div>
 
@@ -264,15 +271,16 @@ function StatsSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
-                className="group bg-surface p-8 border border-outline hover:border-outline transition-all hover: hover:shadow-sky/20"
               >
-                <div className="w-16 h-16 bg-surface flex items-center justify-center mb-5 group-hover:scale-100 transition-transform">
+                <LiquidGlass intensity="subtle" className="group p-8">
+                <div className="w-16 h-16 bg-white/[0.04] flex items-center justify-center mb-5 group-hover:scale-100 transition-transform">
                   <Icon className="w-8 h-8 text-ink" />
                 </div>
                 <p className="text-5xl font-bold text-ink mb-2">
                   <AnimatedNumber value={stat.value} />
                 </p>
                 <p className="text-ink text-lg">{stat.label}</p>
+                </LiquidGlass>
               </motion.div>
             );
           })}
@@ -309,111 +317,6 @@ function QuickAccessSection() {
         </motion.div>
         
         <QuickAccessGrid />
-      </div>
-    </section>
-  );
-}
-
-function FeaturedEventSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  
-  return (
-    <section ref={ref} className="py-32 bg-surface relative overflow-hidden">
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-surface -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10" />
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50, rotateY: -15 }}
-            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <img
-                src="/images/tracy-downtown.jpg"
-                alt="Downtown Tracy event district"
-                className="w-full h-full object-cover hover:scale-100 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-surface" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="inline-block px-3 py-1 bg-surface text-ink text-sm font-semibold">
-                  Featured Event
-                </span>
-              </div>
-            </div>
-            
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, type: 'spring' }}
-              className="absolute -bottom-6 -right-6 w-24 h-24 bg-surface flex items-center justify-center"
-            >
-              <Calendar className="w-10 h-10 text-ink" />
-            </motion.div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 50, rotateY: 15 }}
-            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="font-black tracking-tighter uppercase text-5xl md:text-6xl font-bold text-ink mb-6">
-              Downtown Block Party
-            </h2>
-            
-            <div className="space-y-4 mb-6">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center gap-3 text-textsecondary"
-              >
-                <div className="w-10 h-10 bg-surface flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-ink" />
-                </div>
-                <span className="text-lg">Friday, May 1, 2026 • 6:00 PM – 9:00 PM</span>
-              </motion.div>
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-3 text-textsecondary"
-              >
-                <div className="w-10 h-10 bg-surface flex items-center justify-center">
-                  <Users className="w-5 h-5 text-ink" />
-                </div>
-                <span className="text-lg">Front Street Plaza, 6th Street and Central Avenue</span>
-              </motion.div>
-            </div>
-            
-            <p className="text-lg text-textsecondary mb-8 leading-relaxed">
-              Tracy's block party series returns downtown with a free evening event at the plaza. Expect a lively community atmosphere, with bands and food options announced by the City closer to the event.
-            </p>
-            
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/events"
-                className="inline-flex items-center gap-2 bg-success text-ink font-bold px-6 py-3 hover:bg-green-700 hover:scale-100 transition-all hover: hover:shadow-success/30"
-              >
-                RSVP Now
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/events"
-                className="inline-flex items-center gap-2 border-2 border-outline text-ink font-bold px-6 py-3 hover:bg-canvas hover:text-ink hover:scale-100 transition-all"
-              >
-                View All Events
-              </Link>
-            </div>
-          </motion.div>
-        </div>
       </div>
     </section>
   );
@@ -535,7 +438,7 @@ function UpcomingEventsSection() {
         >
           <Link
             to="/events"
-            className="inline-flex items-center gap-2 bg-canvas text-ink font-bold px-8 py-4 hover:bg-canvas hover:scale-100 transition-all hover: hover:shadow-navy/30"
+            className="inline-flex items-center gap-2 bg-canvas text-ink font-bold px-8 py-4 hover:bg-canvas hover:scale-100 transition-all hover: hover:shadow-sky/30"
           >
             View Full Calendar
             <ArrowRight className="w-5 h-5" />
@@ -584,7 +487,6 @@ export default function Home() {
       <ParallaxHero />
       <StatsSection />
       <QuickAccessSection />
-      <FeaturedEventSection />
       <MissionSection />
       <UpcomingEventsSection />
       <CrisisBanner />

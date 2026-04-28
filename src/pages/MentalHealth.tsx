@@ -6,6 +6,7 @@ import { Phone, MessageSquare, AlertTriangle, Play, Pause, RotateCcw, ChevronRig
 import TherapistCard from '@/components/cards/TherapistCard';
 import { therapists, therapistSpecialties, therapistInsurance, therapistLanguages, therapistFormats } from '@/data/therapists';
 import CinematicScrollyHero from '@/components/CinematicScrollyHero';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 const crisisLines = [
   {
@@ -23,7 +24,7 @@ const crisisLines = [
     type: 'text',
     description: 'Text HOME to 741741 for free, 24/7 crisis counseling.',
     color: 'border-l-sky',
-    bgColor: 'bg-sky/10',
+    bgColor: 'bg-surface',
   },
   {
     name: 'San Joaquin County Crisis',
@@ -69,9 +70,9 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="bg-white rounded-2xl border border-border p-8 shadow-xl hover:shadow-2xl transition-shadow"
     >
-      <h3 className="text-2xl font-bold text-navy mb-2">{title}</h3>
+      <LiquidGlass intensity="subtle" className="p-8">
+      <h3 className="text-2xl font-bold text-ink mb-2">{title}</h3>
       <p className="text-textsecondary mb-6">{description}</p>
 
       <div className="flex flex-col items-center mb-6">
@@ -82,15 +83,15 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
           transition={{ duration: type === 'box' ? 16 : 19, repeat: Infinity, ease: 'linear' }}
           className="relative w-40 h-40 flex items-center justify-center mb-4"
         >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky/30 to-navy/30" />
+          <div className="absolute inset-0 bg-white/[0.04]" />
           <motion.div
             animate={{ 
               scale: isRunning ? [1, 1.2, 1.2, 1, 1] : 1 
             }}
             transition={{ duration: type === 'box' ? 16 : 19, repeat: Infinity, ease: 'linear' }}
-            className="w-28 h-28 rounded-full bg-gradient-to-br from-sky to-navy flex items-center justify-center shadow-xl"
+            className="w-28 h-28 bg-surface flex items-center justify-center"
           >
-            <span className="text-2xl font-bold text-white">
+            <span className="text-2xl font-bold text-ink">
               {phases[phase % phases.length]}
             </span>
           </motion.div>
@@ -114,7 +115,7 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
 
       {type === 'box' && (
         <div className="text-center mb-4">
-          <span className="text-3xl font-mono font-bold text-navy">{formatTime(timer)}</span>
+          <span className="text-3xl font-mono font-bold text-ink">{formatTime(timer)}</span>
         </div>
       )}
 
@@ -123,7 +124,7 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsRunning(!isRunning)}
-          className="inline-flex items-center gap-2 bg-navy text-white font-bold px-6 py-3 rounded-xl hover:bg-navy-dark transition-colors shadow-lg hover:shadow-xl"
+          className="inline-flex items-center gap-2 bg-canvas text-ink font-bold px-6 py-3 hover:bg-canvas transition-colors hover:"
         >
           {isRunning ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
           {isRunning ? 'Pause' : 'Start'}
@@ -132,12 +133,13 @@ function BreathingExercise({ type, title, description }: { type: 'box' | '478'; 
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={reset}
-          className="inline-flex items-center gap-2 border-2 border-navy text-navy font-bold px-6 py-3 rounded-xl hover:bg-navy hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 border-2 border-outline text-ink font-bold px-6 py-3 hover:bg-canvas hover:text-ink transition-colors"
         >
           <RotateCcw className="w-5 h-5" />
           Reset
         </motion.button>
       </div>
+      </LiquidGlass>
     </motion.div>
   );
 }
@@ -170,20 +172,20 @@ export default function MentalHealth() {
         secondary="#38bdf8"
         background="linear-gradient(135deg, #010d12 0%, #022125 56%, #010812 100%)"
         icon={Heart}
-        images={[
-          {
-            url: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=1800&q=80',
-            label: 'Brain Health',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1800&q=80',
-            label: 'Counseling',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1800&q=80',
-            label: 'Wellness',
-          },
-        ]}
+      images={[
+        {
+          url: '/images/medical-building-1.jpg',
+          label: 'Modern Hospital Building',
+        },
+        {
+          url: '/images/medical-clinic-2.jpg',
+          label: 'Medical Professionals',
+        },
+        {
+          url: '/images/medical-clinic-3.jpg',
+          label: 'Healthcare Services',
+        },
+      ]}
         chapters={[
           {
             eyebrow: 'Mental Health Support',
@@ -199,11 +201,11 @@ export default function MentalHealth() {
             content: (
               <div className="space-y-3">
                 {crisisLines.map(line => (
-                  <div key={line.name} className="rounded-2xl border border-white/10 bg-white/10 p-4">
-                    <p className="font-bold text-white">{line.name}</p>
+                  <LiquidGlass key={line.name} intensity="subtle" className="p-4">
+                    <p className="font-bold text-ink">{line.name}</p>
                     <p className="font-mono text-xl font-bold text-teal-300">{line.contact}{line.number ? ` to ${line.number}` : ''}</p>
-                    <p className="mt-1 text-sm text-white/60">{line.description}</p>
-                  </div>
+                    <p className="mt-1 text-sm text-ink">{line.description}</p>
+                  </LiquidGlass>
                 ))}
               </div>
             ),
@@ -216,9 +218,9 @@ export default function MentalHealth() {
             content: (
               <div className="flex flex-wrap gap-3">
                 {['Anxiety', 'Depression', 'Trauma', 'Couples', 'Youth'].map(tag => (
-                  <span key={tag} className="rounded-full border border-sky/30 bg-sky/20 px-4 py-2 text-sm font-medium text-sky">{tag}</span>
+                  <span key={tag} className="border border-outline bg-surface px-4 py-2 text-sm font-medium text-ink">{tag}</span>
                 ))}
-                <span className="inline-flex items-center gap-2 rounded-full border border-teal-300/30 bg-teal-300/15 px-4 py-2 text-sm font-medium text-teal-200">
+                <span className="inline-flex items-center gap-2 border border-teal-300/30 bg-teal-300/15 px-4 py-2 text-sm font-medium text-teal-200">
                   <Wind className="h-4 w-4" /> Wellness tools
                 </span>
               </div>
@@ -231,7 +233,7 @@ export default function MentalHealth() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="py-16 bg-gradient-to-r from-red-50 via-red-100 to-red-50 border-y-4 border-red-200"
+        className="py-16 bg-surface border-y-4 border-red-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -258,25 +260,25 @@ export default function MentalHealth() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 whileHover={{ y: -10, rotateY: 5 }}
-                className={`bg-white rounded-2xl p-8 border-l-4 ${line.color} shadow-xl hover:shadow-2xl transition-all`}
               >
-                <h3 className="font-bold text-xl text-navy mb-3">{line.name}</h3>
+                <LiquidGlass intensity="medium" className={`p-8 border-l-4 ${line.color}`}>
+                <h3 className="font-bold text-xl text-ink mb-3">{line.name}</h3>
                 {line.type === 'call' ? (
                   <a href={`tel:${line.contact.replace(/-/g, '')}`} className="text-4xl font-bold text-error hover:underline block mb-3">
                     {line.contact}
                   </a>
                 ) : (
                   <div className="mb-3">
-                    <span className="text-2xl font-bold text-sky">Text {line.contact}</span>
+                    <span className="text-2xl font-bold text-ink">Text {line.contact}</span>
                     <span className="text-lg text-textsecondary"> to </span>
-                    <span className="text-3xl font-bold text-sky">{line.number}</span>
+                    <span className="text-3xl font-bold text-ink">{line.number}</span>
                   </div>
                 )}
                 <p className="text-textsecondary mb-4">{line.description}</p>
                 {line.type === 'call' && (
                   <a
                     href={`tel:${line.contact.replace(/-/g, '')}`}
-                    className="inline-flex items-center gap-2 bg-error text-white font-bold px-5 py-3 rounded-xl hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl"
+                    className="inline-flex items-center gap-2 bg-error text-ink font-bold px-5 py-3 hover:bg-red-700 transition-colors hover:"
                   >
                     <Phone className="w-5 h-5" />
                     Call Now
@@ -285,19 +287,20 @@ export default function MentalHealth() {
                 {line.type === 'text' && (
                   <a
                     href={`sms:${line.number}?body=${line.contact}`}
-                    className="inline-flex items-center gap-2 bg-sky text-white font-bold px-5 py-3 rounded-xl hover:bg-sky/90 transition-colors shadow-lg hover:shadow-xl"
+                    className="inline-flex items-center gap-2 bg-surface text-ink font-bold px-5 py-3 hover:bg-surface transition-colors hover:"
                   >
                     <MessageSquare className="w-5 h-5" />
                     Text Now
                   </a>
                 )}
+                </LiquidGlass>
               </motion.div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      <section className="py-20 bg-gradient-to-b from-offwhite via-white to-offwhite">
+      <section className="py-20 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -305,10 +308,10 @@ export default function MentalHealth() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+            <span className="inline-block px-4 py-2 bg-surface text-xs font-medium uppercase tracking-widest text-ink mb-4">
               Find a Therapist
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-navy">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink">
               Filter by specialty, insurance, language, and format
             </h2>
           </motion.div>
@@ -337,7 +340,7 @@ export default function MentalHealth() {
                   <select
                     value={filter.value}
                     onChange={(e) => filter.setter(e.target.value)}
-                    className="w-full px-4 py-3 bg-white border-2 border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky focus:border-sky transition-all"
+                    className="w-full px-4 py-3 bg-surface border-2 border-border text-sm focus:outline-none focus:ring-2 focus:ring-sky focus:border-outline transition-all"
                   >
                     {filter.options.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
@@ -385,7 +388,7 @@ export default function MentalHealth() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-lightgray via-white to-lightgray">
+      <section className="py-20 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -393,10 +396,10 @@ export default function MentalHealth() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+            <span className="inline-block px-4 py-2 bg-surface text-xs font-medium uppercase tracking-widest text-ink mb-4">
               Self-Care Tools
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-navy">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink">
               Guided breathing exercises to reduce stress and anxiety
             </h2>
           </motion.div>
@@ -416,7 +419,7 @@ export default function MentalHealth() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-offwhite via-white to-offwhite">
+      <section className="py-20 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -424,10 +427,10 @@ export default function MentalHealth() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+            <span className="inline-block px-4 py-2 bg-surface text-xs font-medium uppercase tracking-widest text-ink mb-4">
               Learn More
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-navy">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink">
               Short, accessible articles on common mental health topics
             </h2>
           </motion.div>
@@ -443,22 +446,23 @@ export default function MentalHealth() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                   whileHover={{ y: -10, rotateX: 5 }}
-                  className="bg-white rounded-2xl border border-border p-6 shadow-lg hover:shadow-2xl transition-all"
                 >
+                  <LiquidGlass intensity="subtle" className="p-6">
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-14 h-14 rounded-2xl bg-sky/10 flex items-center justify-center mb-4"
+                    className="w-14 h-14 bg-white/[0.04] flex items-center justify-center mb-4"
                   >
-                    <Icon className="w-7 h-7 text-sky" />
+                    <Icon className="w-7 h-7 text-ink" />
                   </motion.div>
-                  <h3 className="font-bold text-lg text-navy mb-2">{article.title}</h3>
+                  <h3 className="font-bold text-lg text-ink mb-2">{article.title}</h3>
                   <p className="text-textsecondary mb-4">{article.desc}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-textsecondary">{article.readTime} read</span>
-                    <button className="text-sky font-semibold hover:underline flex items-center gap-1">
+                    <button className="text-ink font-semibold hover:underline flex items-center gap-1">
                       Read More <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
+                  </LiquidGlass>
                 </motion.div>
               );
             })}

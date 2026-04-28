@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Heart, Calendar, HandHeart, Star, Phone } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 const cardData = [
   {
@@ -8,7 +9,7 @@ const cardData = [
     title: 'Community Resources',
     description: 'Housing, food, legal aid, and more',
     path: '/resources',
-    color: 'bg-navy',
+    color: 'bg-canvas',
   },
   {
     icon: Heart,
@@ -22,7 +23,7 @@ const cardData = [
     title: 'Events',
     description: 'Discover local events and RSVP',
     path: '/events',
-    color: 'bg-sky',
+    color: 'bg-surface',
   },
   {
     icon: HandHeart,
@@ -58,20 +59,22 @@ export default function QuickAccessGrid() {
           <Link
             key={card.title}
             to={card.path}
-            className={`reveal reveal-delay-${Math.min(i + 1, 5)} ${isRevealed ? 'revealed' : ''} group bg-white rounded-lg border border-border p-6 card-hover flex items-start gap-4`}
+            className={`reveal reveal-delay-${Math.min(i + 1, 5)} ${isRevealed ? 'revealed' : ''}`}
           >
-            <div className={`w-12 h-12 rounded-full ${card.color} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
-              <Icon className="w-5 h-5 text-white" />
+            <LiquidGlass intensity="subtle" className="group p-6 card-hover flex items-start gap-4 h-full">
+            <div className={`w-12 h-12  ${card.color} flex items-center justify-center shrink-0 group-hover:scale-100 transition-transform`}>
+              <Icon className="w-5 h-5 text-ink" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-navy mb-1 group-hover:text-sky transition-colors">
+              <h3 className="font-semibold text-ink mb-1 group-hover:text-ink transition-colors">
                 {card.title}
               </h3>
               <p className="text-sm text-textsecondary mb-2">{card.description}</p>
-              <span className="inline-flex items-center gap-1 text-sm text-sky font-medium">
+              <span className="inline-flex items-center gap-1 text-sm text-ink font-medium">
                 Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </div>
+            </LiquidGlass>
           </Link>
         );
       })}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 const navLinks = [
   { path: '/', label: 'Home' },
@@ -59,61 +60,63 @@ export default function Navbar() {
         Skip to main content
       </a>
 
-      <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-6xl bg-black/85 border border-outline shadow-[0_20px_55px_rgba(0,0,0,0.32)]">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center shrink-0 group">
-              <span className="font-outfit font-semibold text-ink text-[1.2rem] sm:text-[1.45rem] leading-none tracking-[-0.01em]">
-                Tracy Center
-              </span>
-            </Link>
+      <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-6xl">
+        <LiquidGlass intensity="strong" className="rounded-2xl">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              {/* Logo */}
+              <Link to="/" className="flex items-center shrink-0 group">
+                <span className="font-manrope font-semibold text-ink text-[1.2rem] sm:text-[1.45rem] leading-none tracking-[-0.01em]">
+                  Tracy Center
+                </span>
+              </Link>
 
-            {/* Desktop nav */}
-            <div className="hidden lg:flex items-center gap-2">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="relative px-2.5 py-2 text-[15px] font-semibold tracking-[0.01em] transition-colors duration-200"
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    <span className={`relative z-10 ${isActive ? 'text-ink' : 'text-ink hover:text-ink'}`}>
-                      {link.label}
-                    </span>
-                    {isActive && (
-                      <span className="absolute left-2.5 right-2.5 -bottom-0.5 h-0.5 bg-surface" />
-                    )}
-                  </Link>
-                );
-              })}
-            </div>
+              {/* Desktop nav */}
+              <div className="hidden lg:flex items-center gap-2">
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className="relative px-2.5 py-2 text-[15px] font-semibold tracking-[0.01em] transition-colors duration-200"
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                        <span className={`relative z-10 ${isActive ? 'text-ink' : 'text-ink hover:text-ink'}`}>
+                        {link.label}
+                      </span>
+                      {isActive && (
+                        <span className="absolute left-2.5 right-2.5 -bottom-0.5 h-0.5 bg-surface" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
 
-            {/* Right side */}
-            <div className="flex items-center gap-3">
-              <a
-                href="tel:988"
-                className="hidden sm:inline-flex items-center gap-2 border border-outline text-ink text-sm font-semibold px-4 py-2 hover:bg-surface hover:text-black transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                Get Help
-              </a>
+              {/* Right side */}
+              <div className="flex items-center gap-3">
+                <a
+                  href="tel:988"
+                  className="hidden sm:inline-flex items-center gap-2 border border-white/[0.12] text-ink text-sm font-semibold px-4 py-2 hover:bg-white/[0.08] transition-colors rounded-lg"
+                >
+                  <Phone className="w-4 h-4" />
+                  Get Help
+                </a>
 
-              {/* Mobile menu button */}
-              <button
-                onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 hover:bg-surface transition-colors text-ink"
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileOpen}
-                aria-controls="mobile-nav-drawer"
-              >
-                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
+                {/* Mobile menu button */}
+                <button
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                  className="lg:hidden p-2 hover:bg-white/[0.08] transition-colors text-ink rounded-lg"
+                  aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={mobileOpen}
+                  aria-controls="mobile-nav-drawer"
+                >
+                  {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </LiquidGlass>
       </nav>
 
       {/* Mobile drawer */}

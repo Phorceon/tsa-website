@@ -78,16 +78,16 @@ function AccordionItem({ title, children, defaultOpen = true }: { title: string;
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="border border-border rounded-2xl overflow-hidden mb-5 shadow-lg hover:shadow-xl transition-shadow"
+      className="border border-border overflow-hidden mb-5 hover: transition-shadow"
     >
       <motion.button
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 bg-white hover:bg-lightgray transition-colors text-left"
+        className="w-full flex items-center justify-between p-6 bg-surface hover:bg-lightgray transition-colors text-left"
         aria-expanded={isOpen}
       >
-        <h3 className="font-bold text-lg text-navy">{title}</h3>
+        <h3 className="font-bold text-lg text-ink">{title}</h3>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
@@ -104,7 +104,7 @@ function AccordionItem({ title, children, defaultOpen = true }: { title: string;
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <div className="p-6 bg-white border-t border-border">
+        <div className="p-6 bg-surface border-t border-border">
           {children}
         </div>
       </motion.div>
@@ -121,20 +121,20 @@ export default function References() {
         secondary="#818cf8"
         background="linear-gradient(135deg, #04060d 0%, #0d1020 56%, #07040d 100%)"
         icon={BookOpen}
-        images={[
-          {
-            url: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1800&q=80',
-            label: 'Archive',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1800&q=80',
-            label: 'Research',
-          },
-          {
-            url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=80',
-            label: 'Documentation',
-          },
-        ]}
+  images={[
+    {
+      url: '/images/tracy-downtown.jpg',
+      label: 'Downtown Tracy',
+    },
+    {
+      url: '/images/tracy-legacy-fields.jpg',
+      label: 'Legacy Fields Sports Complex',
+    },
+    {
+      url: '/images/dr-powers-park.jpg',
+      label: 'Dr. Powers Park, Tracy',
+    },
+  ]}
         chapters={[
           {
             eyebrow: 'References & Attribution',
@@ -150,10 +150,10 @@ export default function References() {
             content: (
               <div className="space-y-2">
                 {sourceGroups.slice(0, 5).map((group, i) => (
-                  <div key={group.title} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/10 px-4 py-3">
+                  <div key={group.title} className="flex items-center gap-3 border border-outline bg-surface px-4 py-3">
                     <span className="w-5 font-mono text-sm font-bold text-amber-300">{i + 1}</span>
-                    <p className="text-sm font-medium text-white/80">{group.title}</p>
-                    <span className="ml-auto text-xs text-white/40">{group.sources.length} sources</span>
+                    <p className="text-sm font-medium text-ink">{group.title}</p>
+                    <span className="ml-auto text-xs text-ink">{group.sources.length} sources</span>
                   </div>
                 ))}
               </div>
@@ -167,14 +167,14 @@ export default function References() {
             content: (
               <div className="grid gap-3 sm:grid-cols-2">
                 {['Copyright Checklist', 'Work Log'].map((doc, i) => (
-                  <div key={doc} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-5 py-4">
+                  <div key={doc} className="flex items-center gap-3 border border-outline bg-surface px-5 py-4">
                     {i === 0 ? <FileText className="h-5 w-5 text-amber-300" /> : <Library className="h-5 w-5 text-indigo-300" />}
-                    <span className="text-sm font-medium text-white/80">{doc}</span>
+                    <span className="text-sm font-medium text-ink">{doc}</span>
                   </div>
                 ))}
-                <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-5 py-4 sm:col-span-2">
-                  <Quote className="h-5 w-5 text-white/60" />
-                  <span className="text-sm font-medium text-white/70">Citation groups continue below</span>
+                <div className="flex items-center gap-3 border border-outline bg-surface px-5 py-4 sm:col-span-2">
+                  <Quote className="h-5 w-5 text-ink" />
+                  <span className="text-sm font-medium text-ink">Citation groups continue below</span>
                 </div>
               </div>
             ),
@@ -186,7 +186,7 @@ export default function References() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="py-16 bg-gradient-to-b from-navy to-lightgray"
+        className="py-16 bg-surface"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -201,21 +201,21 @@ export default function References() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 whileHover={{ y: -10, rotateX: 5 }}
-                className="bg-white rounded-2xl border border-border p-10 text-center shadow-xl hover:shadow-2xl transition-all"
+                className="bg-surface border border-border p-10 text-center hover: transition-all"
               >
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-20 h-20 rounded-2xl bg-navy-light flex items-center justify-center mx-auto mb-6"
+                  className="w-20 h-20 bg-canvas flex items-center justify-center mx-auto mb-6"
                 >
-                  <FileText className="w-10 h-10 text-navy" />
+                  <FileText className="w-10 h-10 text-ink" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-navy mb-3">{doc.title}</h3>
+                <h3 className="text-2xl font-bold text-ink mb-3">{doc.title}</h3>
                 <p className="text-textsecondary mb-6">{doc.desc}</p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => alert('PDF download would open the document.')}
-                  className="inline-flex items-center gap-2 bg-navy text-white font-bold px-8 py-4 rounded-xl hover:bg-navy-dark transition-all hover:shadow-xl"
+                  className="inline-flex items-center gap-2 bg-canvas text-ink font-bold px-8 py-4 hover:bg-canvas transition-all hover:"
                 >
                   <Download className="w-5 h-5" />
                   Download PDF
@@ -230,7 +230,7 @@ export default function References() {
         </div>
       </motion.section>
 
-      <section className="py-20 bg-gradient-to-b from-offwhite via-white to-offwhite">
+      <section className="py-20 bg-surface">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -238,10 +238,10 @@ export default function References() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="inline-block px-4 py-2 bg-sky/10 rounded-full text-xs font-medium uppercase tracking-widest text-sky mb-4">
+            <span className="inline-block px-4 py-2 bg-surface text-xs font-medium uppercase tracking-widest text-ink mb-4">
               Sources
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-navy">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink">
               References by Category
             </h2>
           </motion.div>
@@ -264,7 +264,7 @@ export default function References() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: j * 0.05 }}
-                        className="text-sm text-textsecondary pl-4 border-l-3 border-sky/30"
+                        className="text-sm text-textsecondary pl-4 border-l-3 border-outline"
                       >
                         {source}
                       </motion.li>
@@ -281,7 +281,7 @@ export default function References() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="py-16 bg-gradient-to-r from-navy-light via-white to-navy-light"
+        className="py-16 bg-surface"
       >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -290,9 +290,9 @@ export default function References() {
             viewport={{ once: true }}
             transition={{ type: 'spring' }}
           >
-            <h3 className="text-2xl font-bold text-navy mb-6">Custom-Built Framework Statement</h3>
+            <h3 className="text-2xl font-bold text-ink mb-6">Custom-Built Framework Statement</h3>
           </motion.div>
-          <p className="text-navy/80 leading-relaxed text-lg">
+          <p className="text-ink leading-relaxed text-lg">
             This website was built entirely from scratch by the TSA Webmaster team. No pre-built templates, 
             themes, or frameworks (such as WordPress, Bootstrap themes, or purchased templates) were used. 
             All HTML, CSS, and JavaScript were written by team members during the current school year. 

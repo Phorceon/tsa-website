@@ -54,10 +54,10 @@ export default function FilterBar({
             <button
               key={cat}
               onClick={() => toggleFilter(cat)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5  text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-navy text-white'
-                  : 'bg-lightgray text-textsecondary hover:bg-navy-light hover:text-navy'
+                  ? 'bg-canvas text-ink'
+                  : 'bg-lightgray text-textsecondary hover:bg-canvas hover:text-ink'
               }`}
               aria-pressed={isActive}
             >
@@ -76,7 +76,7 @@ export default function FilterBar({
               value={localSearch}
               onChange={(e) => setLocalSearch(e.target.value)}
               placeholder="Search by keyword..."
-              className="w-full pl-9 pr-4 py-2 bg-lightgray border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sky"
+              className="w-full pl-9 pr-4 py-2 bg-lightgray border border-border text-sm focus:outline-none focus:ring-2 focus:ring-sky"
             />
           </div>
         )}
@@ -87,7 +87,7 @@ export default function FilterBar({
               setLocalSearch('');
               onSearchChange('');
             }}
-            className="flex items-center gap-1 text-sm text-navy hover:text-sky transition-colors"
+            className="flex items-center gap-1 text-sm text-ink hover:text-ink transition-colors"
           >
             <X className="w-4 h-4" />
             Clear Filters

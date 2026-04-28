@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { CheckCircle, BookOpen, ExternalLink, HandHeart, Users, Wrench } from 'lucide-react';
 import { volunteerOpportunities, volunteerCauses, donationOrgs, tutors, skills, skillCategories } from '@/data/volunteers';
 import CinematicScrollyHero from '@/components/CinematicScrollyHero';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 export default function Volunteer() {
   const [activeCause, setActiveCause] = useState('All');
@@ -66,13 +67,13 @@ export default function Volunteer() {
                   { icon: BookOpen, label: 'Tutor a Student', sub: 'Free & low-cost tutoring programs', color: '#4A90D9' },
                   { icon: Wrench, label: 'Share a Skill', sub: 'Teach neighbors what you know', color: '#16A34A' },
                 ].map(({ icon: Icon, label, sub, color }) => (
-                  <div key={label} className="flex items-center gap-4 border border-outline bg-surface px-5 py-4">
+                  <LiquidGlass key={label} intensity="subtle" className="flex items-center gap-4 px-5 py-4">
                     <Icon className="h-6 w-6 shrink-0" style={{ color }} />
                     <div>
                       <p className="font-semibold text-ink">{label}</p>
                       <p className="text-sm text-ink">{sub}</p>
                     </div>
-                  </div>
+                  </LiquidGlass>
                 ))}
               </div>
             ),
@@ -182,12 +183,12 @@ export default function Volunteer() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                     whileHover={{ y: -5, rotateX: 3 }}
-                    className="bg-surface border border-border p-8 hover: transition-all"
                   >
+                    <LiquidGlass intensity="subtle" className="p-8">
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="inline-flex items-center gap-2 text-sm font-semibold px-3 py-1 bg-surface text-ink">
+                          <span className="inline-flex items-center gap-2 text-sm font-semibold px-3 py-1 bg-white/[0.04] text-ink">
                             {opp.cause}
                           </span>
                           <span className="text-textsecondary">{opp.commitment}</span>
@@ -201,7 +202,7 @@ export default function Volunteer() {
                           href={opp.applyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="shrink-0 inline-flex items-center gap-2 bg-canvas text-ink font-bold px-6 py-3 hover:bg-canvas transition-all hover:scale-100 hover: self-start"
+                          className="shrink-0 inline-flex items-center gap-2 bg-white/[0.06] text-ink font-bold px-6 py-3 hover:bg-white/[0.10] transition-all hover:scale-100 self-start"
                         >
                           Apply
                           <ExternalLink className="w-4 h-4" />
@@ -212,6 +213,7 @@ export default function Volunteer() {
                         </span>
                       )}
                     </div>
+                    </LiquidGlass>
                   </motion.div>
                 );
               })}
@@ -250,8 +252,8 @@ export default function Volunteer() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15, duration: 0.5 }}
                   whileHover={{ y: -10, rotateX: 5 }}
-                  className="bg-surface border border-border p-8 hover: transition-all flex flex-col"
                 >
+                  <LiquidGlass intensity="subtle" className="p-8 flex flex-col h-full">
                   <HandHeart className="w-12 h-12 text-ink mb-5" />
                   <h3 className="text-xl font-bold text-ink mb-3">{org.name}</h3>
                   <p className="text-textsecondary mb-6 flex-1">{org.description}</p>
@@ -267,11 +269,12 @@ export default function Volunteer() {
                     href={org.donateUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-success text-ink font-bold px-6 py-3 hover:bg-green-700 transition-all hover:scale-100 hover:"
+                    className="inline-flex items-center justify-center gap-2 bg-success text-ink font-bold px-6 py-3 hover:bg-green-700 transition-all hover:scale-100"
                   >
                     Donate Now
                     <ExternalLink className="w-4 h-4" />
                   </a>
+                  </LiquidGlass>
                 </motion.div>
               ))}
             </div>
@@ -320,8 +323,8 @@ export default function Volunteer() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="bg-surface border border-border p-8 hover: transition-all"
                 >
+                  <LiquidGlass intensity="subtle" className="p-8">
                   <div className="flex items-start justify-between mb-4">
                     <BookOpen className="w-10 h-10 text-ink" />
                     <span className={`text-sm font-semibold px-3 py-1  ${tutor.cost === 'Free' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'}`}>
@@ -331,7 +334,7 @@ export default function Volunteer() {
                   <h3 className="text-xl font-bold text-ink mb-3">{tutor.name}</h3>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {tutor.subjects.map((s) => (
-                      <span key={s} className="text-sm bg-canvas text-ink px-3 py-1">{s}</span>
+                      <span key={s} className="text-sm bg-white/[0.04] text-ink px-3 py-1">{s}</span>
                     ))}
                   </div>
                   <div className="space-y-2 text-textsecondary mb-4">
@@ -340,6 +343,7 @@ export default function Volunteer() {
                     <p>{tutor.description}</p>
                     <p className="font-medium text-ink">{tutor.contact}</p>
                   </div>
+                  </LiquidGlass>
                 </motion.div>
               ))}
             </div>
@@ -348,8 +352,8 @@ export default function Volunteer() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="max-w-xl mx-auto bg-surface border border-border p-10"
             >
+              <LiquidGlass intensity="subtle" className="max-w-xl mx-auto p-10">
               <h3 className="text-2xl font-bold text-ink mb-6 text-center">Request a Tutor</h3>
               {tutorSubmitted ? (
                 <motion.div 
@@ -387,6 +391,7 @@ export default function Volunteer() {
                   </button>
                 </form>
               )}
+              </LiquidGlass>
             </motion.div>
           </div>
         </motion.section>
@@ -429,8 +434,8 @@ export default function Volunteer() {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
                       whileHover={{ x: 5 }}
-                      className="bg-surface border border-border p-6 hover: transition-all"
                     >
+                      <LiquidGlass intensity="subtle" className="p-6">
                       <div className="flex items-center justify-between mb-3">
                         <h4 className="font-bold text-ink">{skill.skill}</h4>
                         <span className="text-sm bg-canvas text-ink px-3 py-1">{skill.category}</span>
@@ -438,6 +443,7 @@ export default function Volunteer() {
                       <p className="text-textsecondary mb-3">{skill.description}</p>
                       <p className="text-sm text-textsecondary mb-2">Available: {skill.availability}</p>
                       <p className="text-ink font-medium">{skill.contact}</p>
+                      </LiquidGlass>
                     </motion.div>
                   ))}
                 </div>
@@ -449,7 +455,7 @@ export default function Volunteer() {
                 viewport={{ once: true }}
               >
                 <h3 className="text-xl font-bold text-ink mb-6">Post Your Skill</h3>
-                <div className="bg-surface border border-border p-8">
+                <LiquidGlass intensity="subtle" className="p-8">
                   {skillSubmitted ? (
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -491,7 +497,7 @@ export default function Volunteer() {
                       <p className="text-xs text-textsecondary text-center">Listings are reviewed before posting. No payment processing on this site.</p>
                     </form>
                   )}
-                </div>
+                </LiquidGlass>
               </motion.div>
             </div>
           </div>

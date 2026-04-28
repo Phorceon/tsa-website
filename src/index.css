@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,11 +39,15 @@
   }
 
   body {
-    @apply bg-offwhite text-textprimary font-outfit subpixel-antialiased;
+    @apply bg-canvas text-ink font-outfit subpixel-antialiased;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  * {
+    @apply border-outline rounded-none;
   }
 
   a:focus-visible,

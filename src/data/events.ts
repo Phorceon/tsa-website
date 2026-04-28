@@ -23,7 +23,7 @@ export const events: Event[] = [
     description: "Celebrate sustainability with student presentations on environmental solutions, green business vendors, and family-friendly activities. Win $1,000 for your classroom.",
     attending: 86,
     capacity: 150,
-    image: "/images/event-tracy-earth-day.jpg",
+    image: "/images/event-earth-day-2026.png",
     rsvpUrl: "https://tracyearthproject.org"
   },
   {
@@ -36,7 +36,7 @@ export const events: Event[] = [
     description: "Free concert featuring the Tracy Community Concert Band, Jazz Ensemble, and Jazz Sextet. Directed by Randy Watson. Open to all ages.",
     attending: 120,
     capacity: 200,
-    image: "/images/event-tracy-earth-day.jpg",
+    image: "/images/event-band-concert.jpg",
     rsvpUrl: "https://atthegrand.org"
   },
   {
@@ -49,7 +49,7 @@ export const events: Event[] = [
     description: "Fresh produce, local goods, baked items, and community connections. Every Saturday rain or shine. Support local farmers and artisans.",
     attending: 0,
     capacity: 999,
-    image: "/images/event-food-fest.jpg"
+    image: "/images/event-farmers-market.jpg"
   },
   {
     id: "4",
@@ -61,7 +61,7 @@ export const events: Event[] = [
     description: "Tracy's largest community resource fair. Theme: 'Living Your Best Life in Tracy: Bridging the Digital Divide — Youth and Seniors.' Connect with nonprofits and discover opportunities.",
     attending: 210,
     capacity: 300,
-    image: "/images/event-tracy-earth-day.jpg",
+    image: "/images/event-tracy-unity.jpg",
     rsvpUrl: "https://www.tracyconnects.com"
   },
   {
@@ -74,7 +74,7 @@ export const events: Event[] = [
     description: "Live music, traditional Mexican food, cultural performances, and celebrations honoring Mexican independence. Family-friendly festival atmosphere.",
     attending: 156,
     capacity: 250,
-    image: "/images/event-food-fest.jpg"
+    image: "/images/event-dia-independencia.jpg"
   },
   {
     id: "6",
@@ -99,7 +99,7 @@ export const events: Event[] = [
     description: "Try yoga, tai chi, and cardio classes for free. Open to adults 50+. Meet instructors, tour the facility, and learn about membership options.",
     attending: 28,
     capacity: 40,
-    image: "/images/program-senior-fitness.jpg"
+    image: "/images/event-senior-fitness.jpg"
   },
   {
     id: "8",
@@ -111,11 +111,11 @@ export const events: Event[] = [
     description: "Free basketball clinic for ages 8-14. Learn fundamentals from Tracy Parks & Recreation coaches. All skill levels welcome. Bring water and athletic shoes.",
     attending: 45,
     capacity: 60,
-    image: "/images/program-soccer.jpg"
+    image: "/images/event-basketball-clinic.jpg"
   },
   {
     id: "9",
-    name: "Back-to-School Backpack Drive",
+    name: "Back- Backpack Drive",
     category: "Education",
     date: "2026-08-01",
     time: "10:00 AM – 2:00 PM",
@@ -123,7 +123,7 @@ export const events: Event[] = [
     description: "Help distribute backpacks and school supplies to families in need. Volunteers needed for setup, distribution, and cleanup. Great for community service hours.",
     attending: 34,
     capacity: 50,
-    image: "/images/volunteer-hero.jpg",
+    image: "/images/event-backpack-drive.jpg",
     rsvpUrl: "https://tracyinterfaith.org"
   }
 ];

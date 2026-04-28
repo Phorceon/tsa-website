@@ -1,5 +1,6 @@
 import { Phone, Globe, CheckCircle, Clock, MapPin } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import LiquidGlass from '@/components/ui/LiquidGlass';
 
 interface TherapistCardProps {
   name: string;
@@ -32,16 +33,14 @@ export default function TherapistCard({
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <div
-      ref={ref}
-      className={`reveal reveal-delay-${Math.min(index + 1, 5)} ${isRevealed ? 'revealed' : ''} bg-white rounded-lg border border-border p-5 card-hover`}
-    >
+    <div ref={ref} className={`reveal reveal-delay-${Math.min(index + 1, 5)} ${isRevealed ? 'revealed' : ''}`}>
+      <LiquidGlass intensity="subtle" className="p-5 card-hover">
       <div className="flex items-start gap-4 mb-4">
-        <div className="w-14 h-14 rounded-full bg-navy-light flex items-center justify-center shrink-0">
-          <span className="text-navy font-bold text-lg">{initials}</span>
+        <div className="w-14 h-14 bg-canvas flex items-center justify-center shrink-0">
+          <span className="text-ink font-bold text-lg">{initials}</span>
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-navy truncate">{name}</h3>
+          <h3 className="text-lg font-semibold text-ink truncate">{name}</h3>
           <p className="text-sm text-textsecondary">{credentials}</p>
           <div className="flex items-center gap-1.5 mt-1">
             {acceptingNew ? (
@@ -64,7 +63,7 @@ export default function TherapistCard({
           <span className="text-xs font-medium text-textsecondary uppercase tracking-wider">Specialties</span>
           <div className="flex flex-wrap gap-1.5 mt-1">
             {specialties.map((s) => (
-              <span key={s} className="text-xs bg-navy-light text-navy px-2 py-0.5 rounded-full">
+              <span key={s} className="text-xs bg-canvas text-ink px-2 py-0.5">
                 {s}
               </span>
             ))}
@@ -99,7 +98,7 @@ export default function TherapistCard({
         {phone && (
           <a
             href={`tel:${phone}`}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold border border-navy text-navy hover:bg-navy hover:text-white transition-colors"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 text-sm font-semibold border border-outline text-ink hover:bg-canvas hover:text-ink transition-colors"
           >
             <Phone className="w-3.5 h-3.5" />
             Contact
@@ -110,13 +109,14 @@ export default function TherapistCard({
             href={website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold border border-navy text-navy hover:bg-navy hover:text-white transition-colors"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 text-sm font-semibold border border-outline text-ink hover:bg-canvas hover:text-ink transition-colors"
           >
             <Globe className="w-3.5 h-3.5" />
             Website
           </a>
         )}
       </div>
+      </LiquidGlass>
     </div>
   );
 }
